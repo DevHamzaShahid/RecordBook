@@ -24,7 +24,8 @@ class TextField extends Component {
       textInputStyle,
       containerStyle,
       editable,
-      maxLength = 100,
+      maxLength,
+      scroll
     } = this.props;
     return (
       <View style={[styles.container, containerStyle]}>
@@ -41,6 +42,7 @@ class TextField extends Component {
           keyboardType={keyboardType}
           onChangeText={onChangeText}
           multiline={multiline}
+          scrollEnabled={scroll}
         />
       </View>
     );

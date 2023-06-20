@@ -16,6 +16,7 @@ import is from 'is_js';
 import styles from './styles';
 import Actions from './reducer';
 import DropDownPicker from 'react-native-dropdown-picker';
+import colors from '../../common/colors';
 
 const validationSchema = {
   title: {
@@ -51,16 +52,18 @@ const AddRoom = ({ route, navigation }) => {
   console.log("new adata from db", studio.selectedStudio);
   const [selectedValue, setSelectedValue] = useState(null);
   const [formData, setFormData] = useState({
-    id: editMode ? studio.selectedStudio.id : '',
+    id: editMode ? studio.selectedStudio.id : Math.random(),
     docId: editMode ? studio.selectedStudio.docId : '',
     title: editMode ? studio.selectedStudio.title : '',
-    price: editMode ? `${studio.selectedStudio.price}` : '',
+    price: editMode ? `${studio.selectedStudio.price}` : '0',
     location: editMode ? studio.selectedStudio.location : '',
     studioPin: editMode ? studio.selectedStudio.studioPin : '',
-    hours: editMode ? studio.selectedStudio.hours : '',
-    sixHrPrice: editMode ? studio?.selectedStudio?.sixHrPrice && studio?.selectedStudio?.sixHrPrice : '',
-    twelveHrPrice: studio?.selectedStudio?.twelveHrPrice && studio?.selectedStudio?.twelveHrPrice,
+    hours: editMode ? studio.selectedStudio.hours : '12',
+    sixHrPrice: editMode ? `${studio?.selectedStudio?.sixHrPrice}` : '',
+    twelveHrPrice: editMode ? `${studio?.selectedStudio?.twelveHrPrice}` : '',
   });
+  // const [amenities, setAmenities] = useState(editMode ? room.editRoomTitleDescs : room.roomTitleDescs);
+  const [amenities, setAmenities] = useState([]);
   const [images, setImages] = useState(
     editMode ? studio.selectedStudio.imageUrls : [],
   );
@@ -73,15 +76,25 @@ const AddRoom = ({ route, navigation }) => {
     setImages(image);
   };
   const handleChange = (event, key) => {
-    formData[key] = event;
-    setFormData(formData);
+    const updatedFormData = { ...formData, [key]: event };
+    setFormData(updatedFormData);
   };
-
+  const handleChangeAmenties = (event, index, key) => {
+    const updatedAmenities = amenities.map((amenity, amenityIndex) => {
+      if (amenityIndex === index) {
+        return { ...amenity, [key]: event };
+      }
+      return amenity;
+    });
+    setAmenities(updatedAmenities);
+  };
   useEffect(() => {
     setValue(formData.hours); // Set initial value of the dropdown
     console.log("gtimages", images);
   }, [images]);
-
+  useEffect(() => {
+    setAmenities(editMode ? room.editRoomTitleDescs : room.roomTitleDescs);
+  }, [editMode, room.editRoomTitleDescs, room.roomTitleDescs]);
   const handleValueChange = (itemValue) => {
     setValue(itemValue);
     setSelectedValue(itemValue);
@@ -97,13 +110,16 @@ const AddRoom = ({ route, navigation }) => {
       return;
     }
     formData['id'] = `${Date.now()}`;
-    formData['price'] = parseInt(formData.price);
+    // formData['price'] = parseInt(formData.price);
+    formData['sixHrPrice'] = parseInt(formData.sixHrPrice)
+    formData['twelveHrPrice'] = parseInt(formData.twelveHrPrice)
     formData['engineerPrice'] = 1000;
     formData['promo'] = room.roomPromos;
     formData['images'] = images.map((aI) => aI.uri);
     formData['aminities'] = room.roomTitleDescs;
     dispatch(Actions.createRoom(formData));
   };
+  console.log('here is slot', formData)
 
   const keyExtractor = (k) => `${k.id}`;
 
@@ -113,53 +129,15 @@ const AddRoom = ({ route, navigation }) => {
       setErrors(Errors);
       return;
     }
+    formData['sixHrPrice'] = parseInt(formData.sixHrPrice)
+    formData['twelveHrPrice'] = parseInt(formData.twelveHrPrice)
     formData['imagesModified'] = isImagesModified;
     formData['images'] = images.map((aI) => aI.uri);
     formData['promo'] = room.editRoomPromos;
-    formData['aminities'] = room.editRoomTitleDescs;
+    formData['aminities'] = amenities;
     dispatch(Actions.updateRoom(formData, studio.selectedStudio.imageUrls));
   };
 
-  //no need it is deleting after updating the room(button). working: remove promo from db as well
-  // const removeFromDbAsWell = (data) => {
-
-  //   const docId = studio.selectedStudio.docId;
-
-  //   firestore()
-  //     .collection('Studio')
-  //     .doc(docId)
-  //     .get()
-  //     .then((snapshot) => {
-  //       const promoArray = snapshot._data.promo;
-  //       const itemId = data.item.id;
-
-  //       // Find the index of the item in the promoArray
-  //       const index = promoArray.findIndex((item) => item.id === itemId);
-
-  //       if (index !== -1) {
-  //         // Remove the item from the promoArray using splice
-  //         promoArray.splice(index, 1);
-
-  //         // Update the document with the modified promoArray
-  //         firestore()
-  //           .collection('Studio')
-  //           .doc(docId)
-  //           .update({ promo: promoArray })
-  //           .then(() => {
-  //             console.log('Item deleted successfully from Firestore.');
-  //           })
-  //           .catch((error) => {
-  //             console.error('Error deleting item from Firestore:', error);
-  //           });
-  //       } else {
-  //         console.log('Item not found in the promo array.');
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error retrieving document from Firestore:', error);
-  //     });
-  //   setRefresh(refresh + 2)
-  // }
   const renderPromos = () => {
     return (
       <SwipeListView
@@ -198,13 +176,55 @@ const AddRoom = ({ route, navigation }) => {
   const renderRoomAmenities = () => {
     return (
       <SwipeListView
-        data={editMode ? room.editRoomTitleDescs : room.roomTitleDescs}
+        data={amenities}
         renderItem={(data, rowMap) => (
           <View style={styles.titleDescContainer} key={data.item.id}>
-            <MediumText bold textStyle={styles.title}>
-              {data.item.header}
-            </MediumText>
-            <MediumText textStyle={styles.title}>{data.item.detail}</MediumText>
+            <TextField
+              autoCorrect={false}
+              autoCapitalize="none"
+              value={data.item.header}
+              maxLength={1000}
+              textInputStyle={{
+                backgroundColor: colors.tabBarColor,
+                borderColor: Colors.tabBarColor,
+                fontSize: 15,
+                fontWeight: '500',
+                marginVertical: 0
+              }}
+              containerStyle={{
+                padding: 0,
+                margin: 0,
+              }}
+              multiline={true}
+              onChangeText={(text) => {
+                handleChangeAmenties(text, data.index, 'header');
+                setErrors({});
+              }}
+              scroll={false}
+            />
+            <TextField
+              autoCorrect={false}
+              autoCapitalize="none"
+              value={data.item.detail}
+              multiline={true}
+              textInputStyle={{
+                backgroundColor: colors.tabBarColor,
+                borderColor: Colors.tabBarColor,
+                fontSize: 14,
+                margin: 0,
+                padding: 5,
+                marginVertical: 0
+              }}
+              containerStyle={{
+                padding: 0,
+                margin: 0,
+              }}
+              scroll={false}
+              onChangeText={(text) => {
+                handleChangeAmenties(text, data.index, 'detail');
+                setErrors({});
+              }}
+            />
           </View>
         )}
         keyExtractor={keyExtractor}
@@ -225,6 +245,7 @@ const AddRoom = ({ route, navigation }) => {
       />
     );
   };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#000000' }}>
       <Container style={styles.container}>
@@ -267,9 +288,9 @@ const AddRoom = ({ route, navigation }) => {
               $
             </LargeText>
             <TextField
+              value={formData?.twelveHrPrice}
               autoCorrect={false}
               autoCapitalize="none"
-              value={formData.twelveHrPrice}
               multiline={true}
               keyboardType="decimal-pad"
               textInputStyle={styles.priceText}
@@ -278,28 +299,6 @@ const AddRoom = ({ route, navigation }) => {
                 setErrors({});
               }}
             />
-
-            {/* <LargeText bold textStyle={styles.margin}>
-            / 12 hr
-          </LargeText> */}
-
-            {/* <DropDownPicker
-              open={open}
-              value={selectedValue || value}
-              items={items}
-              setOpen={setOpen}
-              setValue={handleValueChange}
-              setItems={setItems}
-              placeholder='Hours'
-              style={{
-                width: '30%',
-              }}
-              textStyle={{ color: '#000', textDecorationLine: 'none', zIndex: 9999 }}
-              dropDownContainerStyle={{
-                width: '30%',
-                padding: 5,
-              }}
-            /> */}
           </View>
 
           <MediumText bold textStyle={styles.margin}>
@@ -312,7 +311,7 @@ const AddRoom = ({ route, navigation }) => {
             <TextField
               autoCorrect={false}
               autoCapitalize="none"
-              value={formData.sixHrPrice}
+              value={formData?.sixHrPrice}
               multiline={true}
               keyboardType="decimal-pad"
               textInputStyle={styles.priceText}
