@@ -1,0 +1,6 @@
+module Pods_RecordBook_RecordBookTests {
+  umbrella header "Pods-RecordBook-RecordBookTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

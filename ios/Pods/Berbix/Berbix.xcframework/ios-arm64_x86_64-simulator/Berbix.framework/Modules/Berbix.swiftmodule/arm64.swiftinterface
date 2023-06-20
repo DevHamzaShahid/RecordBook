@@ -1,0 +1,73 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.5.1 effective-4.2 (swiftlang-1300.0.31.4 clang-1300.0.29.6)
+// swift-module-flags: -target arm64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 4.2 -enforce-exclusivity=checked -O -module-name Berbix
+import AVFoundation
+@_exported import Berbix
+import Foundation
+import ImageIO
+import Swift
+import UIKit
+import Vision
+import _Concurrency
+public enum BerbixError : Foundation.LocalizedError {
+  case invalidState(Swift.String)
+  case cameraAccessError
+  case userExitError
+  case apiError(Swift.Error)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+extension UIKit.UIColor {
+  convenience public init?(hex: Swift.String)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BerbixConfiguration : ObjectiveC.NSObject {
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class BerbixConfigurationBuilder : ObjectiveC.NSObject {
+  public func withClientToken(_ clientToken: Swift.String) -> Berbix.BerbixConfigurationBuilder
+  public func withBaseURL(_ baseURL: Swift.String) -> Berbix.BerbixConfigurationBuilder
+  public func withEnvironment(_ environment: Berbix.BerbixEnvironment) -> Berbix.BerbixConfigurationBuilder
+  public func build() -> Berbix.BerbixConfiguration
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum BerbixEnvironment : Swift.String {
+  case development
+  case sandbox
+  case staging
+  case production
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public protocol BerbixFlowDelegate {
+  func completed()
+  func failed(error: Berbix.BerbixError)
+}
+@_hasMissingDesignatedInitializers public class BerbixSessionHandle {
+  @objc deinit
+}
+public class BerbixSDK : Berbix.BerbixFlowDelegate {
+  public init()
+  public func startFlow(_ vc: UIKit.UIViewController, delegate: Berbix.BerbixFlowDelegate, config: Berbix.BerbixConfiguration)
+  public func createSession(delegate: Berbix.BerbixFlowDelegate, config: Berbix.BerbixConfiguration, ready: (() -> Swift.Void)?) -> Berbix.BerbixSessionHandle
+  public func display(_ vc: UIKit.UIViewController, handle: Berbix.BerbixSessionHandle)
+  public func completed()
+  public func failed(error: Berbix.BerbixError)
+  @objc deinit
+}
+extension Swift.String : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+extension UIKit.UIImage {
+  public class func gifImageWithData(_ data: Foundation.Data) -> UIKit.UIImage?
+  public class func gifImageWithName(_ name: Swift.String) -> UIKit.UIImage?
+}
+extension Berbix.BerbixEnvironment : Swift.Equatable {}
+extension Berbix.BerbixEnvironment : Swift.Hashable {}
+extension Berbix.BerbixEnvironment : Swift.RawRepresentable {}

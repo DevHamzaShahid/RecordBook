@@ -1,0 +1,6 @@
+module berbix_react_native {
+  umbrella header "berbix-react-native-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,11 @@
+framework module Berbix {
+  umbrella header "Berbix-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module Berbix.Swift {
+    header "Berbix-Swift.h"
+    requires objc
+}
