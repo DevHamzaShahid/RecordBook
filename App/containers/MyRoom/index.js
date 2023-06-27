@@ -60,7 +60,6 @@ const MyRoom = ({ navigation }) => {
     const sortedItems = desiredTitles.flatMap((title) =>
       studio?.studios?.filter((item) => item.title === title)
     );
-    console.log("concatenation then", sortedItems);
     // Concatenate the remaining items
     const remainingItems = studio?.studios?.filter((item) => !desiredTitles.includes(item.title));
     const finalSortedItems = sortedItems.concat(remainingItems);

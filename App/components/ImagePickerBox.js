@@ -119,7 +119,7 @@ const ImagePickerBox = (props) => {
       mediaType: 'any',
       includeBase64: true,
       width: 800, 
-      height: 600,
+      height: 500,
       cropperCircleOverlay: false, 
       cropping: true,
       cropperChooseText: 'Crop', 
@@ -130,7 +130,7 @@ const ImagePickerBox = (props) => {
       cropperStatusBarColor: '#FFFFFF', // Set the color for the status bar on Android
       cropperStatusBarVisible: false, // Hide the status bar on Android
       cropperToolbarWidgetFontSize: 24, // Set the font size for the cropper toolbar widgets
-      cropRect: { x: 0, y: 0, width: 800, height: 600 },
+      cropRect: { x: 0, y: 0, width: 800, height: 500 },
     }).then(response => {
       const source = { uri: response.path, id: `${test.length}` };
       selectedImages([...test, source]);

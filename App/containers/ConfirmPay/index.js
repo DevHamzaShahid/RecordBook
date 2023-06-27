@@ -92,15 +92,16 @@ const ConfirmPay = ({ navigation }) => {
   }, [])
   useEffect(() => {
     if (isMidnight == true) {
-      if (studio.selectedStudio.twelveHrPrice == 200) {
-        setUpdatedPrice(150)
-      }
-      else if (studio.selectedStudio.twelveHrPrice == 300) {
-        setUpdatedPrice(200)
-      }
-      else {
-        setUpdatedPrice(studio.selectedStudio.twelveHrPrice)
-      }
+      // if (studio.selectedStudio.twelveHrPrice == 200) {
+      //   setUpdatedPrice(150)
+      // }
+      // else if (studio.selectedStudio.twelveHrPrice == 300) {
+      //   setUpdatedPrice(200)
+      // }
+      // else {
+      //   setUpdatedPrice(studio.selectedStudio.twelveHrPrice)
+      // }
+      setUpdatedPrice(studio.selectedStudio.dealPrice)
     }
     else {
       setUpdatedPrice(studio.selectedStudio.twelveHrPrice)

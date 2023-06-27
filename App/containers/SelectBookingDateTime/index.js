@@ -136,17 +136,34 @@ const SelectBookingDateTime = ({ navigation }) => {
     setMidnight(midnight)
   }, [])
 
+  // useEffect(() => {
+  //   if (isMidnight == true) {
+  //     if (studio.selectedStudio.twelveHrPrice == 200) {
+  //       setUpdatedPrice(150)
+  //     }
+  //     else if (studio.selectedStudio.twelveHrPrice == 300) {
+  //       setUpdatedPrice(200)
+  //     }
+  //     else {
+  //       setUpdatedPrice(studio.selectedStudio.twelveHrPrice)
+  //     }
+  //   }
+  //   else {
+  //     setUpdatedPrice(studio.selectedStudio.twelveHrPrice)
+  //   }
+  // }, [isMidnight])
   useEffect(() => {
     if (isMidnight == true) {
-      if (studio.selectedStudio.twelveHrPrice == 200) {
-        setUpdatedPrice(150)
-      }
-      else if (studio.selectedStudio.twelveHrPrice == 300) {
-        setUpdatedPrice(200)
-      }
-      else {
-        setUpdatedPrice(studio.selectedStudio.twelveHrPrice)
-      }
+      // if (studio.selectedStudio.twelveHrPrice == 200) {
+      //   setUpdatedPrice(150)
+      // }
+      // else if (studio.selectedStudio.twelveHrPrice == 300) {
+      //   setUpdatedPrice(200)
+      // }
+      // else {
+      //   setUpdatedPrice(studio.selectedStudio.twelveHrPrice)
+      // }
+      setUpdatedPrice(studio.selectedStudio.dealPrice)
     }
     else {
       setUpdatedPrice(studio.selectedStudio.twelveHrPrice)
@@ -202,7 +219,6 @@ const SelectBookingDateTime = ({ navigation }) => {
 
     return { listSessionBooking: list, priceSessionBooking };
   }, [bookingsInfo]);
-  console.log("check new pricesss", listSessionBooking, priceSessionBooking);
   const selectDate = useCallback(
     (date) => {
       const keys = Object.keys(bookingsInfo);

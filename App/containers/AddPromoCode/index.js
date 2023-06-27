@@ -89,6 +89,7 @@ const AddPromoCode = ({ route, navigation }) => {
       valid_until: date.toString(),
       ...(isEnabled ? { singleUserOneTmPromo: true } : {}),
     };
+
     dispatch(
       editMode
         ? Actions.addEditPromoCode(newPromo)

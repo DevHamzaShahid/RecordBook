@@ -1,7 +1,7 @@
-import {call, put, takeLatest, select} from 'redux-saga/effects';
-import Actions, {StudioTypes, studio} from './reducer';
-import AppActions, {app} from '../Root/reducer';
-import {navigate} from '../../utils/rNavigation';
+import { call, put, takeLatest, select } from 'redux-saga/effects';
+import Actions, { StudioTypes, studio } from './reducer';
+import AppActions, { app } from '../Root/reducer';
+import { navigate } from '../../utils/rNavigation';
 import hitHouseApi from '../../services/hitHouseApi';
 import FcmApi from '../../services/fcmApi';
 import moment from 'moment';
@@ -11,12 +11,10 @@ function* getStudios() {
     yield put(AppActions.loading(true));
     yield call(FcmApi.requestUserPermission);
     const studios = yield call(hitHouseApi.getStudios);
-
     if (studios) {
       yield put(Actions.setStudios(studios));
       yield getStudiosByDate(moment().format('YYYY-MM-DD'));
     }
-
     yield put(AppActions.loading(false));
   } catch (e) {
     yield put(AppActions.loading(false));

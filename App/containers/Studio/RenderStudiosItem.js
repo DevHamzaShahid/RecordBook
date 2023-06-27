@@ -22,6 +22,7 @@ function RenderStudiosItem({ item }) {
       rate={item.price}
       sixHrPrice={item.sixHrPrice}
       twelveHrPrice={item.twelveHrPrice}
+      dealPrice={item.dealPrice}
       subtitle={item.location}
       hours={item.hours}
       onPress={() => onPressStudio(item)}

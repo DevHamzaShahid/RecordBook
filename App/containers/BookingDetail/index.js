@@ -1,5 +1,5 @@
-import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Alert,
   Linking,
@@ -8,10 +8,10 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import {Icon} from 'react-native-elements';
-import {Container} from 'native-base';
-import {SolidButton} from '@Buttons';
-import {LargeText, MediumText, SmallText} from '@Typography';
+import { Icon } from 'react-native-elements';
+import { Container } from 'native-base';
+import { SolidButton } from '@Buttons';
+import { LargeText, MediumText, SmallText } from '@Typography';
 import moment from 'moment';
 import Actions from '../MyBooking/reducer';
 import StudioActions from '../Studio/reducer';
@@ -36,8 +36,8 @@ const fees = (amount) => {
   return _total.toFixed(2);
 };
 
-const BookingDetail = ({route, navigation}) => {
-  const {adminMode} = route.params;
+const BookingDetail = ({ route, navigation }) => {
+  const { adminMode } = route.params;
   const dispatch = useDispatch();
   const booking = useSelector((state) => state.booking);
   const user = useSelector((state) => state.user);
@@ -56,7 +56,7 @@ const BookingDetail = ({route, navigation}) => {
       );
     }
   };
-
+ 
   const rescheduleBooking = () => {
     let today = moment();
     let bookingDate = moment(booking.selectedBooking.date);
@@ -78,19 +78,19 @@ const BookingDetail = ({route, navigation}) => {
     <Container style={styles.container}>
       <TopNav showBack title={adminMode ? 'Booking Request' : 'My Bookings'} />
       <LinearGradient
-        style={{flex: 1}}
-        start={{x: 0.0, y: 0.25}}
-        end={{x: 0.5, y: 1.0}}
+        style={{ flex: 1 }}
+        start={{ x: 0.0, y: 0.25 }}
+        end={{ x: 0.5, y: 1.0 }}
         locations={[0, 0.25, 0.5, 0.75, 1]}
         colors={['#092a40', '#061D2B', '#020e14', '#061D2B', '#092a40']}>
         <ScrollView style={styles.scrollContainer}>
           <View style={styles.topImageContainer}>
             <FastImage
               style={styles.topImage}
-              source={{uri: banner, priority: FastImage.priority.normal}}
+              source={{ uri: banner, priority: FastImage.priority.normal }}
               resizeMode={FastImage.resizeMode.cover}
             />
-            <View style={{justifyContent: 'center', marginLeft: 16}}>
+            <View style={{ justifyContent: 'center', marginLeft: 16 }}>
               <LargeText bold>
                 {booking.selectedBooking.associatedStudio.title}
               </LargeText>
@@ -168,7 +168,7 @@ const BookingDetail = ({route, navigation}) => {
                 $
                 {fees(
                   booking.selectedBooking.amount -
-                    booking.selectedBooking.discount,
+                  booking.selectedBooking.discount,
                 )}
               </MediumText>
             </View>
@@ -179,7 +179,7 @@ const BookingDetail = ({route, navigation}) => {
                 $
                 {memfees(
                   booking.selectedBooking.amount -
-                    booking.selectedBooking.discount,
+                  booking.selectedBooking.discount,
                 )}
               </RegularText>
             </View>

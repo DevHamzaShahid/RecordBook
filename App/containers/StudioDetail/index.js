@@ -38,7 +38,6 @@ const IMAGE_HEIGHT = (Constant.screenWidth * 9) / 16;
 function Amenities({ item }) {
   console.log(JSON.stringify(item));
   const Value = item.detail.replaceAll('\\n', '\n');
-
   return (
     <View style={styles.amenitiesView}>
       <View style={styles.iconView}>
@@ -58,9 +57,7 @@ const StudioDetail = ({ navigation }) => {
   const studio = useSelector((state) => state.studio);
   const { auth, user_approved } = useSelector((state) => state.user);
   const animation = useRef(new Animated.Value(0)).current;
-
   const [isMidnight, setMidnight] = useState(false)
-
 
   useEffect(() => {
     const midnight = isMidnightDealTime()
@@ -155,10 +152,12 @@ const StudioDetail = ({ navigation }) => {
             <View style={styles.btnContainer}>
               {isMidnight ?
                 <Text style={styles.rateStyle}>
-                  <LargeText bold>${studio.selectedStudio.twelveHrPrice == 300 ? '200' : studio.selectedStudio.twelveHrPrice == 200 ? "150" : studio.selectedStudio.twelveHrPrice}</LargeText>/12hrs
-                  {' '}
+                  {/* <LargeText bold>${studio.selectedStudio.twelveHrPrice == 300 ? '200' : studio.selectedStudio.twelveHrPrice == 200 ? "150" : studio.selectedStudio.twelveHrPrice}</LargeText>/12hrs */}
+                  <LargeText bold>${studio.selectedStudio.dealPrice}</LargeText>/12hrs
+                  {' '}{' '}
+                  <LargeText bold>${studio.selectedStudio.sixHrPrice}</LargeText>/6hrs
                   {/* <LargeText>
-                    {studio.selectedStudio.price == 300 ? '$100' : studio.selectedStudio.price == 200 ? '$75':null}
+                    {studio.selectedStudio.twelveHrPrice == 300 ?  : studio.selectedStudio.price == 200 ? '$75':null}
                   </LargeText>/6hrs */}
                 </Text>
                 : <Text style={styles.rateStyle}>

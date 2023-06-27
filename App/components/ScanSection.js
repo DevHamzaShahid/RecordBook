@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
-import {GlobalStyle, Colors, Fonts} from '@common';
-import {Icon} from 'react-native-elements';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import { GlobalStyle, Colors, Fonts } from '@common';
+import { Icon } from 'react-native-elements';
 
-import {RegularText} from '@Typography';
+import { RegularText } from '@Typography';
 
 const ScanSection = props => {
   return (

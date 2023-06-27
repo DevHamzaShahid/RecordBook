@@ -61,6 +61,7 @@ const AddRoom = ({ route, navigation }) => {
     hours: editMode ? studio.selectedStudio.hours : '12',
     sixHrPrice: editMode ? `${studio?.selectedStudio?.sixHrPrice}` : '',
     twelveHrPrice: editMode ? `${studio?.selectedStudio?.twelveHrPrice}` : '',
+    dealPrice: editMode ? `${studio?.selectedStudio?.dealPrice}` : '',
   });
   // const [amenities, setAmenities] = useState(editMode ? room.editRoomTitleDescs : room.roomTitleDescs);
   const [amenities, setAmenities] = useState([]);
@@ -89,12 +90,15 @@ const AddRoom = ({ route, navigation }) => {
     setAmenities(updatedAmenities);
   };
   useEffect(() => {
-    setValue(formData.hours); // Set initial value of the dropdown
+    // Set initial value of the dropdown
+    setValue(formData.hours);
     console.log("gtimages", images);
   }, [images]);
+
   useEffect(() => {
     setAmenities(editMode ? room.editRoomTitleDescs : room.roomTitleDescs);
   }, [editMode, room.editRoomTitleDescs, room.roomTitleDescs]);
+
   const handleValueChange = (itemValue) => {
     setValue(itemValue);
     setSelectedValue(itemValue);
@@ -109,9 +113,11 @@ const AddRoom = ({ route, navigation }) => {
       setErrors(Errors);
       return;
     }
+
     formData['id'] = `${Date.now()}`;
     // formData['price'] = parseInt(formData.price);
     formData['sixHrPrice'] = parseInt(formData.sixHrPrice)
+    formData['dealPrice'] = parseInt(formData.dealPrice)
     formData['twelveHrPrice'] = parseInt(formData.twelveHrPrice)
     formData['engineerPrice'] = 1000;
     formData['promo'] = room.roomPromos;
@@ -129,7 +135,9 @@ const AddRoom = ({ route, navigation }) => {
       setErrors(Errors);
       return;
     }
+    
     formData['sixHrPrice'] = parseInt(formData.sixHrPrice)
+    formData['dealPrice'] = parseInt(formData.dealPrice)
     formData['twelveHrPrice'] = parseInt(formData.twelveHrPrice)
     formData['imagesModified'] = isImagesModified;
     formData['images'] = images.map((aI) => aI.uri);
@@ -179,6 +187,7 @@ const AddRoom = ({ route, navigation }) => {
         data={amenities}
         renderItem={(data, rowMap) => (
           <View style={styles.titleDescContainer} key={data.item.id}>
+            {/* <View style={{position:'absolute',backgroundColor:'rgba(255,255,255,0.7)',height:'100%',width:'100%',zIndex:10}}/> */}
             <TextField
               autoCorrect={false}
               autoCapitalize="none"
@@ -189,7 +198,8 @@ const AddRoom = ({ route, navigation }) => {
                 borderColor: Colors.tabBarColor,
                 fontSize: 15,
                 fontWeight: '500',
-                marginVertical: 0
+                marginVertical: 0,
+                position: 'absolute',
               }}
               containerStyle={{
                 padding: 0,
@@ -213,7 +223,7 @@ const AddRoom = ({ route, navigation }) => {
                 fontSize: 14,
                 margin: 0,
                 padding: 5,
-                marginVertical: 0
+                marginVertical: 0,
               }}
               containerStyle={{
                 padding: 0,
@@ -280,47 +290,71 @@ const AddRoom = ({ route, navigation }) => {
             />
           </View>
           {renderRoomAmenities()}
-          <MediumText bold textStyle={styles.margin}>
-            Set price for 12hr
-          </MediumText>
-          <View style={styles.price}>
-            <LargeText bold textStyle={styles.margin}>
-              $
-            </LargeText>
-            <TextField
-              value={formData?.twelveHrPrice}
-              autoCorrect={false}
-              autoCapitalize="none"
-              multiline={true}
-              keyboardType="decimal-pad"
-              textInputStyle={styles.priceText}
-              onChangeText={(text) => {
-                handleChange(text, 'twelveHrPrice');
-                setErrors({});
-              }}
-            />
-          </View>
+          <View style={{ marginTop: 20 }}>
+            <MediumText bold textStyle={styles.margin}>
+              Set price for 12hr
+            </MediumText>
+            <View style={styles.price}>
+              <LargeText bold textStyle={styles.margin}>
+                $
+              </LargeText>
+              <TextField
+                value={formData?.twelveHrPrice}
+                autoCorrect={false}
+                autoCapitalize="none"
+                multiline={true}
+                keyboardType="decimal-pad"
+                textInputStyle={styles.priceText}
+                onChangeText={(text) => {
+                  handleChange(text, 'twelveHrPrice');
+                  setErrors({});
+                }}
+              />
+            </View>
+            <MediumText bold textStyle={styles.margin}>
+              Set price for 6hr
+            </MediumText>
+            <View style={styles.price}>
+              <LargeText bold textStyle={styles.margin}>
+                $
+              </LargeText>
+              <TextField
+                autoCorrect={false}
+                autoCapitalize="none"
+                value={formData?.sixHrPrice}
+                multiline={true}
+                keyboardType="decimal-pad"
+                textInputStyle={styles.priceText}
+                onChangeText={(text) => {
+                  handleChange(text, 'sixHrPrice');
+                  setErrors({});
+                }}
+              />
 
-          <MediumText bold textStyle={styles.margin}>
-            Set price for 6hr
-          </MediumText>
-          <View style={styles.price}>
-            <LargeText bold textStyle={styles.margin}>
-              $
-            </LargeText>
-            <TextField
-              autoCorrect={false}
-              autoCapitalize="none"
-              value={formData?.sixHrPrice}
-              multiline={true}
-              keyboardType="decimal-pad"
-              textInputStyle={styles.priceText}
-              onChangeText={(text) => {
-                handleChange(text, 'sixHrPrice');
-                setErrors({});
-              }}
-            />
+            </View>
+            {/*Set last minute deal price */}
 
+            <MediumText bold textStyle={styles.margin}>
+              Set deal price
+            </MediumText>
+            <View style={styles.price}>
+              <LargeText bold textStyle={styles.margin}>
+                $
+              </LargeText>
+              <TextField
+                autoCorrect={false}
+                autoCapitalize="none"
+                value={formData?.dealPrice}
+                multiline={true}
+                keyboardType="decimal-pad"
+                textInputStyle={styles.priceText}
+                onChangeText={(text) => {
+                  handleChange(text, 'dealPrice');
+                  setErrors({});
+                }}
+              />
+
+            </View>
             {/* <LargeText bold textStyle={styles.margin}>
             / 12 hr
           </LargeText> */}

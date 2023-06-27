@@ -66,11 +66,11 @@ const StudioItem = (props) => {
       <MediumText textStyle={styles.rateStyle}>
         {isMidnight &&
           <>
-            <RegularText textStyle={styles.rateStyleDecoration} >
+            <RegularText textStyle={styles.rateStyleDecoration} bold>
               ${parseFloat(props.twelveHrPrice)}
               {/* regular */}
             </RegularText>
-            <Text style={{ color: '#fff', fontSize: 14, textDecorationLine: 'line-through' }}>/12hrs</Text>
+            <Text style={{ color: '#fff', fontSize: 14, textDecorationLine: 'line-through', fontWeight: 'bold' }}>/12hrs</Text>
             {'  '}
           </>
         }
@@ -83,17 +83,22 @@ const StudioItem = (props) => {
           </RegularText>{' '}
           / {props.hours}hrs{' '} */}
 
-        {isMidnight ?
-          // <RegularText textStyle={styles.rateStyle} bold>
-          //   ${props.rate == 200 ? "150/12hrs $75/6hrs / Now until 8am!" : props.rate == 300 ? "200/12hrs $100/6hrs / Now until 8am!" : props.rate + "/" + `${props.hours}` + "hrs" + " " + props.rate / 2 + "/" + `${props.hours / 2}` + "hrs"}
-          // </RegularText>
+        {isMidnight
+          ?
           <RegularText textStyle={styles.rateStyle} bold>
-            ${props.twelveHrPrice == 200 ? "150/Now until 8am!" : props.twelveHrPrice == 300 ? "200/Now until 8am!" : props.twelveHrPrice + "/" + `${props.hours}` + "hrs"}
-          </RegularText>
-          :
+            ${props.dealPrice}/Now until 8am!
+          </RegularText> :
           <RegularText textStyle={styles.orignalRateStyle} bold>
-            ${props.twelveHrPrice}/{props.hours}hrs  ${props.sixHrPrice?props.sixHrPrice:0}/{props.hours / 2}hrs
+            ${props.twelveHrPrice}/<Text style={{ fontSize: 13 }}>{props.hours}hrs </Text> ${props.sixHrPrice ? props.sixHrPrice : 0}/<Text style={{ fontSize: 13 }}>{props.hours / 2}hrs</Text>
           </RegularText>
+          // <RegularText textStyle={styles.rateStyle} bold>
+          //   ${props.twelveHrPrice == 200 ? "150/Now until 8am!" : props.twelveHrPrice == 300 ? "200/Now until 8am!" : props.twelveHrPrice + "/" + `${props.hours}` + "hrs"}
+          // </RegularText>
+          // :
+          // <RegularText textStyle={styles.orignalRateStyle} bold>
+          //   ${props.twelveHrPrice}/<Text style={{ fontSize: 13 }}>{props.hours}hrs </Text> ${props.sixHrPrice ? props.sixHrPrice : 0}/<Text style={{ fontSize: 13 }}>{props.hours / 2}hrs</Text>
+          // </RegularText>
+
         }
         {' '}
 

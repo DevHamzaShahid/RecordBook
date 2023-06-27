@@ -14,10 +14,9 @@ import RenderStudiosItem from './RenderStudiosItem';
 import { View } from 'native-base';
 import { Calendar, ExpandableCalendar } from 'react-native-calendars';
 import DatePicker from 'react-native-date-picker';
-
 import { Colors, Fonts } from '@common';
-
 import moment from 'moment';
+
 function Filter() {
   const studio = useSelector((state) => state.studio);
   const [open, setOpen] = useState(false);
@@ -50,7 +49,6 @@ function Filter() {
           alignSelf: 'center',
           marginTop: 20,
           height: 50,
-
           borderRadius: 5,
         }}>
         <View

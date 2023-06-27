@@ -6,7 +6,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.black,
   },
   margin: {
-    marginTop:20,
+    // marginTop:20,
   },
   titleDescContainer: {
     borderColor: 'white',
