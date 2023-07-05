@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {SectionList, Alert, View} from 'react-native';
-import {Container} from 'native-base';
-import {GlobalStyle} from '@common';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { SectionList, Alert, View } from 'react-native';
+import { Container } from 'native-base';
+import { GlobalStyle } from '@common';
 import Actions from './reducer';
 import SectionHeader from '../../components/SectionHeader';
 import BookingItem from '../../components/BookingItem';
@@ -32,8 +32,8 @@ const RenderScene = SceneMap({
 });
 
 const routes = [
-  {key: 'Upcoming', title: 'Upcoming'},
-  {key: 'Past', title: 'Past'},
+  { key: 'Upcoming', title: 'Upcoming' },
+  { key: 'Past', title: 'Past' },
 ];
 
 const RenderTabBar = (props) => (
@@ -43,21 +43,21 @@ const RenderTabBar = (props) => (
     style={styles.taBar}
     activeColor={colors.pink}
     inactiveColor={colors.white}
-    renderLabel={({route, focused, color}) => (
-      <MediumText textStyle={[styles.labelTab, {color}]}>
+    renderLabel={({ route, focused, color }) => (
+      <MediumText textStyle={[styles.labelTab, { color }]}>
         {route.title}
       </MediumText>
     )}
     renderIndicator={(props) => (
       <TabBarIndicator
         {...props}
-        style={{backgroundColor: colors.pink, height: 3}}
+        style={{ backgroundColor: colors.pink, height: 3 }}
       />
     )}
   />
 );
 
-const MyBooking = ({navigation}) => {
+const MyBooking = ({ navigation }) => {
   const dispatch = useDispatch();
   const booking = useSelector((state) => state.booking);
   const studio = useSelector((state) => state.studio);
@@ -89,16 +89,16 @@ const MyBooking = ({navigation}) => {
     <View style={styles.container}>
       <TopNav title={'My Bookings'} />
       <LinearGradient
-        style={{flex: 1}}
-        start={{x: 0.0, y: 0.25}}
-        end={{x: 0.5, y: 1.0}}
+        style={{ flex: 1 }}
+        start={{ x: 0.0, y: 0.25 }}
+        end={{ x: 0.5, y: 1.0 }}
         locations={[0, 0.25, 0.5, 0.75, 1]}
         colors={['#092a40', '#061D2B', '#020e14', '#061D2B', '#092a40']}>
         <TabView
-          navigationState={{index, routes}}
+          navigationState={{ index, routes }}
           renderScene={RenderScene}
           onIndexChange={setIndex}
-          initialLayout={{width: Constants.screenWidth}}
+          initialLayout={{ width: Constants.screenWidth }}
           renderTabBar={RenderTabBar}
         />
         {/*<SectionList

@@ -22,7 +22,7 @@ const SwiperItem = (props) => {
           uri: props.imagePath,
           priority: FastImage.priority.normal,
         }}
-        resizeMode={FastImage.resizeMode.cover}></Image>
+        resizeMode={FastImage.resizeMode.stretch}></Image>
     </Pressable>
   );
 };
@@ -30,7 +30,7 @@ export default SwiperItem;
 
 const styles = StyleSheet.create({
   cardStyle: {
-    borderRadius: 5,
+    borderRadius: 15,
     height: (Constant.screenWidth * 9) / 16,
     width: Constant.screenWidth,
   },

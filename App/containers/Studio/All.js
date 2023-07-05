@@ -9,11 +9,12 @@ function All() {
   const [sortedStudio, setSortedStudio] = useState([]);
 
   useEffect(() => {
-    const desiredTitles = ['OMAR’S ROOM', 'Twin Room A', 'Twin Room B', 'GAME ROOM', 'Unit 5', 'Internal ROOM'];
+    const desiredTitles = ['OMAR’S ROOM', 'Twin Room A', 'Twin Room B', 'GAME ROOM', 'Unit 5'];//'Internal ROOM'
     // Filter items with desired titles
     const sortedItems = desiredTitles.flatMap((title) =>
       studio?.studios?.filter((item) => item.title === title)
     );
+
     // Concatenate the remaining items
     const remainingItems = studio?.studios?.filter((item) => !desiredTitles.includes(item.title));
     const finalSortedItems = sortedItems.concat(remainingItems);

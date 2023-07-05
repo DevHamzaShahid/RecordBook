@@ -153,7 +153,8 @@ const StudioDetail = ({ navigation }) => {
               {isMidnight ?
                 <Text style={styles.rateStyle}>
                   {/* <LargeText bold>${studio.selectedStudio.twelveHrPrice == 300 ? '200' : studio.selectedStudio.twelveHrPrice == 200 ? "150" : studio.selectedStudio.twelveHrPrice}</LargeText>/12hrs */}
-                  <LargeText bold>${studio.selectedStudio.dealPrice}</LargeText>/12hrs
+                  {/* <LargeText bold>${studio.selectedStudio.dealPrice}</LargeText>/12hrs */}
+                  <LargeText bold>${studio.selectedStudio.twelveHrPrice}</LargeText>/12hrs
                   {' '}{' '}
                   <LargeText bold>${studio.selectedStudio.sixHrPrice}</LargeText>/6hrs
                   {/* <LargeText>

@@ -8,7 +8,6 @@ import MediumText from './Typography/MediumText';
 import fonts from '../common/Fonts';
 import RegularText from './Typography/RegularText';
 import SwipperGalleryModal from './SwipperGalleryModal';
-import Images from '../common/images';
 import Moment from 'moment-timezone';
 import { isMidnightDealTime } from '../utils/helper';
 

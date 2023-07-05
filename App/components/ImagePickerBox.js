@@ -17,6 +17,7 @@ import DraggableFlatList, {
 } from 'react-native-draggable-flatlist';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { Constant } from '../common';
 
 const ImagePickerBox = (props) => {
   const { selectedImages, setIsImagesModified, images } = props;
@@ -119,7 +120,8 @@ const ImagePickerBox = (props) => {
       mediaType: 'any',
       includeBase64: true,
       width: 800, 
-      height: 500,
+      height: 460,
+      // height:(Constant.screenWidth * 9) / 16,
       cropperCircleOverlay: false, 
       cropping: true,
       cropperChooseText: 'Crop', 
