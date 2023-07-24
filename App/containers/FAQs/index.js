@@ -10,7 +10,7 @@ import TopNav from '../../components/TopNav';
 import LinearGradient from 'react-native-linear-gradient';
 import {Icon} from 'react-native-elements';
 import MediumText from '../../components/Typography/MediumText';
-
+ 
 function FAQItem({item}) {
   const [isShow, setShow] = useState(false);
   return (
