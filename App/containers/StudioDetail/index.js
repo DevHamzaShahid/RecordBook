@@ -37,14 +37,14 @@ const IMAGE_HEIGHT = (Constant.screenWidth * 9) / 16;
 
 function Amenities({ item }) {
   // console.log(JSON.stringify(item));
-  let Value;
-  if (item && item?.detail && typeof item.detail === 'string') {
-    Value = item?.detail?.replaceAll('\\n', '\n');
-    // Now you can use the Value variable with replaced line breaks.
-  } else {
-    Value = item?.detail
-    // Handle the case where item or item.detail is not as expected.
+  let Value = item?.detail || ''; // Initialize Value to an empty string if item?.detail is null or undefined
+
+  if (typeof Value === 'string') {
+    // Use a regular expression to replace all occurrences of '\\n' with '\n'
+    Value = Value.replace(/\\n/g, '\n');
   }
+
+
   return (
     <View style={styles.amenitiesView}>
       <View style={styles.iconView}>
