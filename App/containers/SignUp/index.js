@@ -168,7 +168,7 @@ const SignUp = ({navigation}) => {
             ? '+' + country.callingCode + phoneNumber
             : '+1' + phoneNumber,
           //phone: phoneNumber.startsWith('+') ? phoneNumber : '+1' + phoneNumber,
-          //phone: '+919977147643',
+          // phone: phoneNumber,
           first_name: firstName,
           last_name: lastName,
           full_name: firstName ? firstName : ' ' + lastName ? lastName : '',
@@ -195,17 +195,17 @@ const SignUp = ({navigation}) => {
   }, [subscribe]);
 
   const changePhone = useCallback((text) => {
-    const cleaned = ('' + text).replace(/\D/g, '');
-    const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-      const intlCode = match[1] ? '+1 ' : '',
-        number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join(
-          '',
-        );
-      onChangePhoneNumber(number);
-    } else {
+    // const cleaned = ('' + text).replace(/\D/g, '');
+    // const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+    // if (match) {
+    //   const intlCode = match[1] ? '+1 ' : '',
+    //     number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join(
+    //       '',
+    //     );
+    //   onChangePhoneNumber(number);
+    // } else {
       onChangePhoneNumber(text);
-    }
+    // }
   }, []);
 
   const [activeInputIndex, setActiveInputIndex] = useState(0);
@@ -479,3 +479,34 @@ const SignUp = ({navigation}) => {
 };
 
 export default SignUp;
+// import { View, Text } from 'react-native'
+// import React from 'react'
+
+// import auth from '@react-native-firebase/auth';
+// const index = () => {
+
+
+// auth()
+//   .createUserWithEmailAndPassword('jane.doe@example1.com', 'SuperSecretPassword!')
+//   .then(() => {
+//     console.log('User account created & signed in!');
+//   })
+//   .catch(error => {
+//     if (error.code === 'auth/email-already-in-use') {
+//       console.log('That email address is already in use!');
+//     }
+
+//     if (error.code === 'auth/invalid-email') {
+//       console.log('That email address is invalid!');
+//     }
+
+//     console.error(error);
+//   });
+//   return (
+//     <View>
+//       <Text>index</Text>
+//     </View>
+//   )
+// }
+
+// export default index

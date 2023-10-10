@@ -75,6 +75,10 @@ import ConfirmPay from '../containers/ConfirmPay';
 import ContactUs from '../containers/ContactUs';
 import Testing from '../containers/Testing';
 
+
+
+import TestPhone from '../containers/TestPhone'
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const header = (title) => {
@@ -121,6 +125,7 @@ const createMainStack = () => (
     <Stack.Screen name="RegistrationSuccess" component={RegistrationSuccess} />
     <Stack.Screen name="HomeTab" children={Main} />
     <Stack.Screen name="AdminHomeTab" children={createAdminMainTab} />
+    <Stack.Screen name="TestPhone" children={TestPhone} />
   </Stack.Navigator>
 );
 
@@ -253,6 +258,11 @@ const createMainTab = () => {
                 ? Images.profile_tab_ic
                 : Images.profile_tab_inactive_ic;
             }
+            case 'TestPhone': {
+              icon = focused
+                ? Images.profile_tab_ic
+                : Images.profile_tab_inactive_ic;
+            }
           }
           // You can return any component that you like here!
           return <Image source={icon} style={styles.icon} />;
@@ -266,9 +276,11 @@ const createMainTab = () => {
           backgroundColor: '#111c24',
         },
       }}>
-      <Stack.Screen name="Studio" component={Studio} />
+      {/* <Stack.Screen name="Studio" component={Studio} /> */}
+      <Tab.Screen name="Studio" component={Studio} />
       <Tab.Screen name="My Bookings" component={myBookingsStack} />
       <Tab.Screen name="Profile" component={profileStack} />
+      <Tab.Screen name="TestPhone" component={TestPhone} />
     </Tab.Navigator>
   );
 };

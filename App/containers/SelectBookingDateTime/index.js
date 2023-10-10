@@ -24,6 +24,7 @@ import CustomBackdrop from './CustomBackdrop';
 import colors from '../../common/colors';
 import SolidButton from '../../components/Buttons/SolidButton';
 import { isMidnightDealTime } from '../../utils/helper';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export function generatorBookingSession(session = {}) {
   return {
@@ -241,7 +242,7 @@ const SelectBookingDateTime = ({ navigation }) => {
   );
 
   const bottomSheetRef = useRef(null);
-  const handleSheetChanges = useCallback((index: number) => {
+  const handleSheetChanges = useCallback((index) => {
     setShowSelectSection(index !== 0);
   }, []);
 
@@ -252,6 +253,7 @@ const SelectBookingDateTime = ({ navigation }) => {
     <>
       <Container style={styles.container}>
         <SafeAreaView />
+        <ScrollView>
         <View style={styles.wrapper}>
           <View style={styles.view}>
             <Pressable
@@ -289,6 +291,7 @@ const SelectBookingDateTime = ({ navigation }) => {
           )}
           ListEmptyComponent={ListEmptyComponent}
         />
+       </ScrollView>
         {listSessionBooking.length > 0 && (
           <SafeAreaView>
             <View style={styles.btnContainer}>

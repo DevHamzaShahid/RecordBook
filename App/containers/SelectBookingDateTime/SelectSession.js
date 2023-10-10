@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import LargeText from '../../components/Typography/LargeText';
 import RegularText from '../../components/Typography/RegularText';
@@ -99,13 +100,13 @@ function SelectSession({
     }
   }, [curSelectSection])
   return (
-    <LinearGradient
+        <LinearGradient
       style={styles.contentContainer}
       start={{ x: 0.0, y: 0.25 }}
       end={{ x: 0.5, y: 1.0 }}
       colors={['#061D2B', '#020e14', '#061D2B']}>
-      <ScrollView>
-        <View style={styles.wrapper}>
+      <ScrollView contentContainerStyle={{paddingBottom:100}}>
+      <View style={styles.wrapper}>
           <LargeText>Select Session Block</LargeText>
           <MediumText textStyle={styles.descText}>
             We offer two set 12 hour session blocks per day in all rooms.
@@ -326,8 +327,8 @@ function SelectSession({
           disabled={
             !(curSelectSection.nightTimeSlot || curSelectSection.dayTimeSlot || curSelectSection.morningSlot || curSelectSection.eveningSlot)
           }
-        />
-      </ScrollView>
+          />
+          </ScrollView>
     </LinearGradient>
   );
 }

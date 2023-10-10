@@ -26,7 +26,6 @@ const PhoneVerification = ({navigation, route}) => {
   const resend = useCallback(() => {
     dispatch(Actions.login(route.params.phone));
   }, [route.params.phone]);
-
   useEffect(() => {
     dispatch(Actions.login(route.params.phone));
   }, []);

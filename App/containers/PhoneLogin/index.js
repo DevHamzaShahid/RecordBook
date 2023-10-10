@@ -116,17 +116,17 @@ const PhoneLogin = ({navigation}) => {
   }, [phoneNumber, country]);
 
   const changePhone = useCallback((text) => {
-    const cleaned = ('' + text).replace(/\D/g, '');
-    const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-      const intlCode = match[1] ? '+1 ' : '',
-        number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join(
-          '',
-        );
-      onChangePhone(number);
-    } else {
+    // const cleaned = ('' + text).replace(/\D/g, '');
+    // const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+    // if (match) {
+    //   const intlCode = match[1] ? '+1 ' : '',
+    //     number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join(
+    //       '',
+    //     );
+    //   onChangePhone(number);
+    // } else {
       onChangePhone(text);
-    }
+    // }
   }, []);
 
   return (

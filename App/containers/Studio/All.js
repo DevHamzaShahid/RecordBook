@@ -11,7 +11,7 @@ function All() {
   useEffect(() => {
     const desiredTitles = ['OMAR’S ROOM', 'Twin Room A', 'Twin Room B', 'GAME ROOM', 'Unit 5'];//'Internal ROOM'
     // Filter items with desired titles
-    const sortedItems = desiredTitles.flatMap((title) =>
+    const sortedItems = desiredTitles?.flatMap((title) =>
       studio?.studios?.filter((item) => item.title === title)
     );
 
@@ -26,6 +26,7 @@ function All() {
     <FlatList
       data={sortedStudio}
       style={styles.container}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => <RenderStudiosItem item={item} />}
       ListFooterComponent={<View style={styles.footer} />}
     />

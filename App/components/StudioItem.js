@@ -25,6 +25,7 @@ const StudioItem = (props) => {
   };
 
   const isWithinTimeFrame = isBetween8PMand8AM();
+
   useEffect(() => {
     const midnight = isMidnightDealTime()
     setMidnight(midnight)

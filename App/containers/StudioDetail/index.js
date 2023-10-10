@@ -159,18 +159,13 @@ const StudioDetail = ({ navigation }) => {
             <View style={styles.btnContainer}>
               {isMidnight ?
                 <Text style={styles.rateStyle}>
-                  {/* <LargeText bold>${studio.selectedStudio.twelveHrPrice == 300 ? '200' : studio.selectedStudio.twelveHrPrice == 200 ? "150" : studio.selectedStudio.twelveHrPrice}</LargeText>/12hrs */}
-                  {/* <LargeText bold>${studio.selectedStudio.dealPrice}</LargeText>/12hrs */}
                   <LargeText bold>${studio.selectedStudio.twelveHrPrice}</LargeText>/12hrs
                   {' '}{' '}
                   <LargeText bold>${studio.selectedStudio.sixHrPrice}</LargeText>/6hrs
-                  {/* <LargeText>
-                    {studio.selectedStudio.twelveHrPrice == 300 ?  : studio.selectedStudio.price == 200 ? '$75':null}
-                  </LargeText>/6hrs */}
                 </Text>
                 : <Text style={styles.rateStyle}>
                   <LargeText bold>${studio.selectedStudio.twelveHrPrice}</LargeText>/12hrs
-                  {' '} <LargeText bold>${studio.selectedStudio.sixHrPrice}</LargeText>/6hrs
+                  {' '} <LargeText bold>${studio.selectedStudio.sixHrPrice}</LargeText>/6hrs{' '}
                 </Text>}
               <SolidButton
                 colors={['#fff', '#fff']}

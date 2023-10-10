@@ -26,9 +26,9 @@ export default StyleSheet.create({
   btnContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     backgroundColor: '#000',
-    paddingHorizontal: 24,
+    // paddingHorizontal: 24,
   },
   acceptButtonStyle: {
     flex: 1,

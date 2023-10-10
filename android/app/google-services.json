@@ -8,51 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:567786899828:android:7d4f5db1212bf478608421",
-        "android_client_info": {
-          "package_name": "com.hithouse"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "567786899828-mo3jao4i663cgd5uu4s7li3imtlca4b0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hithouse",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "567786899828-31h1fdos1bgi490g3gomh0peepmug7kg.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCk5Sef4T5Mq2YvB-YJfnCMzGcV_QdTpUQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "567786899828-31h1fdos1bgi490g3gomh0peepmug7kg.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "567786899828-7cfjr3gs33mao790fg1gb76c2ok34vq2.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.recordBook.ios",
-                "app_store_id": "1565703693"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:567786899828:android:9efb15f06043b66d608421",
         "android_client_info": {
           "package_name": "com.recordbook"

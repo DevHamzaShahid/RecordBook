@@ -23,7 +23,7 @@ const SwipperGalleryModal = (props) => {
         <Swiper
           showsPagination={!props.disableClick}
           dotColor="white"
-          removeClippedSubviews={false}
+          // removeClippedSubviews={false}
           activeDotColor={Colors.skyBlue02}>
           {props.images.map((aImage, index) => {
             return (

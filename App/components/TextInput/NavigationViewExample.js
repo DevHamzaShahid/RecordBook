@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import {
   StyleSheet,
@@ -9,7 +9,7 @@ import {
   Text,
 } from 'react-native';
 
-import {KeyboardAccessoryNavigation} from 'react-native-keyboard-accessory';
+import { KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
 
 let inputs = [
   {
@@ -29,7 +29,6 @@ let inputs = [
   },
   {
     keyboardType: 'numeric',
-
     placeholder: 'Enter phone number',
   },
   {
@@ -39,12 +38,10 @@ let inputs = [
   },
   {
     keyboardType: 'default',
-
     placeholder: 'Create Password',
   },
   {
     keyboardType: 'default',
-
     placeholder: 'Enter Instagram username',
   },
 ];
@@ -76,7 +73,7 @@ class NavigationViewExample extends Component {
   };
 
   handleFocusNext = () => {
-    const {nextFocusDisabled, activeInputIndex} = this.state;
+    const { nextFocusDisabled, activeInputIndex } = this.state;
     if (nextFocusDisabled) {
       return;
     }
@@ -85,7 +82,7 @@ class NavigationViewExample extends Component {
   };
 
   handleFocusPrevious = () => {
-    const {previousFocusDisabled, activeInputIndex} = this.state;
+    const { previousFocusDisabled, activeInputIndex } = this.state;
     if (previousFocusDisabled) {
       return;
     }
@@ -109,7 +106,7 @@ class NavigationViewExample extends Component {
             <Text style={styles.switchInputText}>Hide arrows</Text>
           </View>
           {inputs.map(
-            ({placeholder, keyboardType, ref, autoComplete}, index) => (
+            ({ placeholder, keyboardType, ref, autoComplete }, index) => (
               <TextInput
                 key={`input_${index}`}
                 ref={ref}
@@ -125,32 +122,32 @@ class NavigationViewExample extends Component {
                   index == 0
                     ? firstName
                     : index == 1
-                    ? lastName
-                    : index == 2
-                    ? address
-                    : index == 3
-                    ? phoneNumber
-                    : index == 4
-                    ? email
-                    : index == 5
-                    ? password
-                    : insta
+                      ? lastName
+                      : index == 2
+                        ? address
+                        : index == 3
+                          ? phoneNumber
+                          : index == 4
+                            ? email
+                            : index == 5
+                              ? password
+                              : insta
                 }
                 autoComplete={autoComplete}
                 error={
                   index == 0
                     ? errors.firstName && errors.firstName[0]
                     : index == 1
-                    ? errors.lastName && errors.lastName[0]
-                    : index == 2
-                    ? errors.address && errors.address[0]
-                    : index == 3
-                    ? errors.phoneNumber && errors.phoneNumber[0]
-                    : index == 4
-                    ? errors.email && errors.email[0]
-                    : index == 5
-                    ? errors.password && errors.password[0]
-                    : null
+                      ? errors.lastName && errors.lastName[0]
+                      : index == 2
+                        ? errors.address && errors.address[0]
+                        : index == 3
+                          ? errors.phoneNumber && errors.phoneNumber[0]
+                          : index == 4
+                            ? errors.email && errors.email[0]
+                            : index == 5
+                              ? errors.password && errors.password[0]
+                              : null
                 }
                 onChangeText={(text) => {
                   if (index == 0) {
@@ -176,7 +173,7 @@ class NavigationViewExample extends Component {
                     onPress={() => {
                       setIsCCModalVisible(true);
                     }}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <CountryPicker
                         withFilter
                         withAlphaFilter
@@ -206,7 +203,7 @@ class NavigationViewExample extends Component {
                       />
 
                       <Image
-                        style={{marginStart: 5, height: 15, width: 15}}
+                        style={{ marginStart: 5, height: 15, width: 15 }}
                         source={require('../../../assets/down_arrow.png')}></Image>
                     </View>
                   </TouchableOpacity>
