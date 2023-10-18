@@ -86,7 +86,6 @@ class NavigationViewExample extends Component {
     if (previousFocusDisabled) {
       return;
     }
-
     inputs[activeInputIndex - 1].ref.current.focus();
   };
 

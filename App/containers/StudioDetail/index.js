@@ -155,6 +155,8 @@ const StudioDetail = ({ navigation }) => {
         </Animated.View>
 
         <SafeAreaView>
+
+          {/* {auth ? ( */}
           {auth && user_approved ? (
             <View style={styles.btnContainer}>
               {isMidnight ?
