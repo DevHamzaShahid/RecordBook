@@ -107,7 +107,6 @@ const UploadProfileImage = ({ navigation }) => {
             buttonPositive: 'OK',
           }
         );
-        
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           cameraLaunch()
         } else {
@@ -135,15 +134,14 @@ const UploadProfileImage = ({ navigation }) => {
   };
 
   const testBerbix = () => {
-    if(imageList?.length==0|| selfie.length==0){
+    if (imageList?.length == 0 || selfie.length == 0) {
       alert('please upload id card or selfie you are missing')
     }
-    else{
+    else {
       alert('docs sent')
     }
-
   }
-  
+
   // useEffect(() => {
   //   dispatch(AppActions.loading(true));
   // functions()

@@ -9,7 +9,9 @@ import { Images } from '../../common';
 import TopNav from '../../components/TopNav';
 import TextInput from '../../components/TextInput';
 import colors from '../../common/colors';
-import { addUserToMailchimp } from '../../utils/helper';
+import { MAILCHIMP_APIKEY } from '../../utils/helper';
+import axios from 'axios';
+import { apply } from 'redux-saga/effects';
 
 const PhoneVerification = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -40,23 +42,48 @@ const PhoneVerification = ({ navigation, route }) => {
     }
   }, [code]);
 
+  const data1 = route?.params;
   useEffect(() => {
-    const data = route?.params;
-    console.log("datatttat>>>>>>>>>>>>>>>>>>>>>>>>>>>",data);
+    const dataR = {
+      email_address: data1?.email,
+      status: 'subscribed',
+      merge_fields: {
+        FNAME: data1?.first_name,
+        LNAME: data1?.last_name,
+        PHONE: data1?.phone,
+        ADDRESS: {
+          addr1: data1?.address,
+          city: '.',
+          state: '.',
+          zip: '.',
+          country: '.'
+        }
+      },
+      tags: ['customer']
+    };
+
     if (userRegisteredSuccesfully) {
-      addUserToMailchimp(data?.email, data?.first_name, data?.last_name, data?.phone, data?.address)
-        .then(() => {
-          // Mailchimp operation succeeded, navigate to the next screen
-          alert('success')// Replace 'NextScreen' with your actual screen name
-        })
-        .catch((error) => {
-          // Handle Mailchimp operation failure if necessary
-          console.error('Mailchimp Error:', error);
-        });
+      const listId = '6c9c0c76f1'; //audiance id is basically the listID
+    (async () => {
+      const apikey = MAILCHIMP_APIKEY
+      try {
+        const response = await axios.post(
+          `https://us9.api.mailchimp.com/3.0/lists/${listId}/members`,
+          dataR,
+          {
+            headers: {
+              Authorization: `Bearer ${apikey}`
+            }
+          }
+        );
+        console.log('User added to Mailchimp successfully:', response.data);
+      } catch (error) {
+        alert(error.response.data)
+        console.error('Error adding user to Mailchimp:', error.response.data);
+      }
+    })()
     }
   }, [userRegisteredSuccesfully, route.params, navigation]);
-
-
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -79,7 +106,7 @@ const PhoneVerification = ({ navigation, route }) => {
           <MediumText bold>Verification Code:</MediumText>
 
           <TextInput
-            autoFocu
+            autoFocus
             maxLength={6}
             borderColor={colors.skyBlue01}
             borderBottomWidth={2}

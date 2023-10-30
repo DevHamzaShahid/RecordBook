@@ -568,6 +568,10 @@ PODS:
     - React
   - react-native-notifications (4.3.5):
     - React-Core
+  - react-native-payments (0.8.4):
+    - Braintree (~> 4)
+    - React
+    - Stripe (~> 19)
   - react-native-safe-area-context (0.7.3):
     - React
   - react-native-signature-capture (0.4.12):
@@ -715,6 +719,7 @@ PODS:
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
+  - Stripe (19.4.1)
   - TOCropViewController (2.6.1)
   - Yoga (1.14.0)
 
@@ -742,6 +747,7 @@ DEPENDENCIES:
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-notifications (from `../node_modules/react-native-notifications`)
+  - react-native-payments (from `../node_modules/react-native-payments`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-signature-capture (from `../node_modules/react-native-signature-capture`)
   - react-native-spinkit (from `../node_modules/react-native-spinkit`)
@@ -815,6 +821,7 @@ SPEC REPOS:
     - Protobuf
     - SDWebImage
     - SDWebImageWebPCoder
+    - Stripe
     - TOCropViewController
 
 EXTERNAL SOURCES:
@@ -860,6 +867,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-notifications:
     :path: "../node_modules/react-native-notifications"
+  react-native-payments:
+    :path: "../node_modules/react-native-payments"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-signature-capture:
@@ -985,6 +994,7 @@ SPEC CHECKSUMS:
   react-native-document-picker: 226068006be4c52f8ef7f32d855ee025a12e9e64
   react-native-image-picker: 4e63090db19a528e36c0cc07d1423c8c0cb4c4ef
   react-native-notifications: 504143d59f9628c3b0c22fd0ccf34b65b9182d01
+  react-native-payments: 0cb00209f3b25a72d5b614554abf688e2cc53002
   react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   react-native-signature-capture: 416a3947684e049a5b012cdd6496f878dc797f16
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
@@ -1021,6 +1031,7 @@ SPEC CHECKSUMS:
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
+  Stripe: 5914399ac5878056b985d56b409cb4bb1e7fc7e8
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
 
