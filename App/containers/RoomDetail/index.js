@@ -33,7 +33,7 @@ const RoomDetail = ({navigation}) => {
   };
 
   const renderAmenities = () => {
-    return studio.selectedStudio.aminities.map((amenity) => {
+    return studio?.selectedStudio?.aminities?.map((amenity) => {
       return (
         <View key={amenity.id}>
           <MediumText bold textStyle={styles.margin}>
@@ -51,27 +51,27 @@ const RoomDetail = ({navigation}) => {
         <View style={styles.topImageContainer}>
           <FastImage
             style={styles.topImage}
-            source={{uri: banner, priority: FastImage.priority.normal}}
-            resizeMode={FastImage.resizeMode.cover}
+            source={{uri: banner, priority: FastImage?.priority?.normal}}
+            resizeMode={FastImage?.resizeMode?.cover}
           />
         </View>
         <RegularText bold textStyle={styles.margin}>
-          {studio.selectedStudio.title}
+          {studio?.selectedStudio?.title}
         </RegularText>
         {renderAmenities()}
-        <GalleryModal images={studio.selectedStudio.imageUrls} />
+        {/* <GalleryModal images={studio?.selectedStudio?.imageUrls} /> */}
       </ScrollView>
       <View style={[styles.btnContainer,{marginHorizontal:10}]}>
         <SolidButton
           title="Edit"
           buttonStyle={{marginHorizontal:10,}}
-          onPress={() => onPressEdit(studio.selectedStudio)}
+          onPress={() => onPressEdit(studio?.selectedStudio)}
         />
         <SolidButton
           title="Delete"
           buttonStyle={{marginHorizontal:10}}
           textStyle={styles.btnTextStyle}
-          onPress={() => onPressDelete(studio.selectedStudio)}
+          onPress={() => onPressDelete(studio?.selectedStudio)}
         />
       </View>
     </Container>

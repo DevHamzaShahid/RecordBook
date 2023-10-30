@@ -13,29 +13,30 @@ import {
   Text,
   View,
 } from 'react-native';
-import {Container, Content} from 'native-base';
+import { Container, Content } from 'native-base';
 
-import {SolidButton} from '@Buttons';
+import { SolidButton } from '@Buttons';
 import CheckBoxTitle from '../../components/CheckBoxTitle';
 import microValidator from 'micro-validator';
 import messaging from '@react-native-firebase/messaging';
 import is from 'is_js';
 import styles from './styles';
-import {Fonts, Images} from '../../common';
+import { Fonts, Images } from '../../common';
 import MediumText from '../../components/Typography/MediumText';
 import TextInput from '../../components/TextInput';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Actions from '../Profile/reducer';
 import BorderButton from '../../components/Buttons/BorderButton';
 import colors from '../../common/colors';
 import CountryPicker from 'react-native-country-picker-modal';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {KeyboardAccessoryView} from 'react-native-keyboard-accessory';
-import {KeyboardAccessoryNavigation} from 'react-native-keyboard-accessory';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
+import { KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
 import NavigationViewExample from '../../components/TextInput/NavigationViewExample';
 
-import {Appearance} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { Appearance } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
 
 const validationSchema = {
   password: {
@@ -125,7 +126,7 @@ let inputs = [
   },
 ];
 
-const SignUp = ({navigation}) => {
+const SignUp = ({ navigation }) => {
   const refs = useRef(inputs.map(() => React.createRef()));
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
@@ -140,6 +141,9 @@ const SignUp = ({navigation}) => {
   const [termAccept, setTermsAccepted] = useState(false);
   const [isCCModalVisible, setIsCCModalVisible] = useState(false);
   const [country, setCountry] = useState('1');
+
+  // const userRegisteredSuccesfully = useSelector((state) => state.user.registration_successful)
+  // console.log("check user registration status", userRegisteredSuccesfully);
 
   const save = () => {
     const Errors = microValidator.validate(validationSchema, {
@@ -204,7 +208,7 @@ const SignUp = ({navigation}) => {
     //     );
     //   onChangePhoneNumber(number);
     // } else {
-      onChangePhoneNumber(text);
+    onChangePhoneNumber(text);
     // }
   }, []);
 
@@ -235,7 +239,7 @@ const SignUp = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       {/* <View style={{flex: 1}}> */}
 
       <Container style={styles.container}>
@@ -252,7 +256,7 @@ const SignUp = ({navigation}) => {
             </MediumText>
 
             {inputs.map(
-              ({placeholder, keyboardType, ref, autoComplete}, index) => (
+              ({ placeholder, keyboardType, ref, autoComplete }, index) => (
                 <TextInput
                   key={`input_${index}`}
                   ref={refs.current[index]}
@@ -269,32 +273,32 @@ const SignUp = ({navigation}) => {
                     index == 0
                       ? firstName
                       : index == 1
-                      ? lastName
-                      : index == 2
-                      ? address
-                      : index == 4
-                      ? phoneNumber
-                      : index == 3
-                      ? email
-                      : index == 5
-                      ? password
-                      : insta
+                        ? lastName
+                        : index == 2
+                          ? address
+                          : index == 4
+                            ? phoneNumber
+                            : index == 3
+                              ? email
+                              : index == 5
+                                ? password
+                                : insta
                   }
                   autoComplete={autoComplete}
                   error={
                     index == 0
                       ? errors.firstName && errors.firstName[0]
                       : index == 1
-                      ? errors.lastName && errors.lastName[0]
-                      : index == 2
-                      ? errors.address && errors.address[0]
-                      : index == 4
-                      ? errors.phoneNumber && errors.phoneNumber[0]
-                      : index == 3
-                      ? errors.email && errors.email[0]
-                      : index == 5
-                      ? errors.password && errors.password[0]
-                      : null
+                        ? errors.lastName && errors.lastName[0]
+                        : index == 2
+                          ? errors.address && errors.address[0]
+                          : index == 4
+                            ? errors.phoneNumber && errors.phoneNumber[0]
+                            : index == 3
+                              ? errors.email && errors.email[0]
+                              : index == 5
+                                ? errors.password && errors.password[0]
+                                : null
                   }
                   onChangeText={(text) => {
                     if (index == 0) {
@@ -340,7 +344,7 @@ const SignUp = ({navigation}) => {
                         setIsCCModalVisible(true);
                       }}>
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <CountryPicker
                           withFilter
                           withAlphaFilter
@@ -370,7 +374,7 @@ const SignUp = ({navigation}) => {
                         />
 
                         <Image
-                          style={{marginStart: 5, height: 15, width: 15}}
+                          style={{ marginStart: 5, height: 15, width: 15 }}
                           source={require('../../../assets/down_arrow.png')}></Image>
                       </View>
                     </TouchableOpacity>
@@ -441,7 +445,6 @@ const SignUp = ({navigation}) => {
             </View>
 
             <SolidButton onPress={save} title="Create Account" />
-
             <BorderButton
               buttonStyle={{
                 borderColor: colors.skyBlue02,

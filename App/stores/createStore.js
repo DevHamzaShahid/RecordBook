@@ -1,12 +1,12 @@
-import {applyMiddleware, compose, createStore} from 'redux';
-import {persistReducer} from 'redux-persist';
+import { applyMiddleware, compose, createStore } from 'redux';
+import { persistReducer } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
 import reduxPersist from '../utils/reduxPersist';
 import rehydration from '../services/rehydrationServices';
 
 // creates the store
-export default (rootReducer: any, rootSaga: any) => {
+export default (rootReducer, rootSaga) => {
   const persistedReducer = persistReducer(
     reduxPersist.storeConfig,
     rootReducer,
@@ -21,7 +21,7 @@ export default (rootReducer: any, rootSaga: any) => {
 
   // const sagaMonitor = __DEV__ ? console.tron.createSagaMonitor() : null;
   const sagaMonitor = null;
-  const sagaMiddleware = createSagaMiddleware({sagaMonitor});
+  const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
   middleware.push(sagaMiddleware);
 
   /* ------------- Redux Logger Middleware ------------- */
@@ -43,5 +43,5 @@ export default (rootReducer: any, rootSaga: any) => {
     persistor = rehydration.updateReducers(store);
   }
 
-  return {store, persistor};
+  return { store, persistor };
 };

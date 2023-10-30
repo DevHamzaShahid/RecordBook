@@ -1,26 +1,30 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {Image, Keyboard, TouchableWithoutFeedback, View} from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Image, Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 import Actions from '../Profile/reducer';
-import {BorderButton, SolidButton} from '@Buttons';
-import {MediumText, XLText} from '@Typography';
+import { BorderButton, SolidButton } from '@Buttons';
+import { MediumText, XLText } from '@Typography';
 import styles from './styles';
-import {Images} from '../../common';
+import { Images } from '../../common';
 import TopNav from '../../components/TopNav';
 import TextInput from '../../components/TextInput';
 import colors from '../../common/colors';
+import { addUserToMailchimp } from '../../utils/helper';
 
-const PhoneVerification = ({navigation, route}) => {
+const PhoneVerification = ({ navigation, route }) => {
   const dispatch = useDispatch();
+  const userRegisteredSuccesfully = useSelector((state) => state.user.registration_successful)
+  console.log("check user registration status", userRegisteredSuccesfully);
   const [errors, setErrors] = useState('');
   const [code, setCode] = useState('');
 
-  const continuePressed = useCallback(() => {
+  const continuePressed = useCallback(async() => {
     if (code === '') {
       setErrors('Please enter correct verification code');
       return;
     }
-    dispatch(Actions.verifyCode(code, route.params));
+    await dispatch(Actions.verifyCode(code, route.params));
+
   }, [route.params, code]);
 
   const resend = useCallback(() => {
@@ -35,6 +39,23 @@ const PhoneVerification = ({navigation, route}) => {
       continuePressed();
     }
   }, [code]);
+
+  useEffect(() => {
+    const data = route?.params;
+    console.log("datatttat>>>>>>>>>>>>>>>>>>>>>>>>>>>",data);
+    if (userRegisteredSuccesfully) {
+      addUserToMailchimp(data?.email, data?.first_name, data?.last_name, data?.phone, data?.address)
+        .then(() => {
+          // Mailchimp operation succeeded, navigate to the next screen
+          alert('success')// Replace 'NextScreen' with your actual screen name
+        })
+        .catch((error) => {
+          // Handle Mailchimp operation failure if necessary
+          console.error('Mailchimp Error:', error);
+        });
+    }
+  }, [userRegisteredSuccesfully, route.params, navigation]);
+
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

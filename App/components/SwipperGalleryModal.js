@@ -9,7 +9,7 @@ import { Image } from 'react-native';
 const SwipperGalleryModal = (props) => {
   const [modalVisible, onChangeModalVisible] = useState(false);
 
-  const uris = props.images.map((aIamge) => {
+  const uris = props?.images?.map((aIamge) => {
     return {
       source: {
         uri: aIamge,

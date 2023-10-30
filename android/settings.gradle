@@ -1,4 +1,6 @@
 rootProject.name = 'RecordBook'
+include ':react-native-date-picker'
+project(':react-native-date-picker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-date-picker/android')
 include ':react-native-pager-view'
 project(':react-native-pager-view').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-pager-view/android')
 include ':react-native-pager-view'

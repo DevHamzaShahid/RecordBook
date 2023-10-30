@@ -17,6 +17,8 @@ import styles from './styles';
 import Actions from './reducer';
 import DropDownPicker from 'react-native-dropdown-picker';
 import colors from '../../common/colors';
+import { useIsFocused } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 
 const validationSchema = {
   title: {
@@ -72,6 +74,9 @@ const AddRoom = ({ route, navigation }) => {
   const [isImagesModified, setImagesModified] = useState(false);
   const [refresh, setRefresh] = useState(0);
 
+
+  const isFocused = useIsFocused()
+
   const dispatch = useDispatch();
   const selectedImages = (image) => {
     setImages(image);
@@ -89,11 +94,13 @@ const AddRoom = ({ route, navigation }) => {
     });
     setAmenities(updatedAmenities);
   };
+
   useEffect(() => {
     // Set initial value of the dropdown
     setValue(formData.hours);
     console.log("gtimages", images);
   }, [images]);
+
 
   useEffect(() => {
     setAmenities(editMode ? room.editRoomTitleDescs : room.roomTitleDescs);
@@ -116,16 +123,16 @@ const AddRoom = ({ route, navigation }) => {
 
     formData['id'] = `${Date.now()}`;
     // formData['price'] = parseInt(formData.price);
-    formData['sixHrPrice'] = parseInt(formData.sixHrPrice)
-    formData['dealPrice'] = parseInt(formData.dealPrice)
-    formData['twelveHrPrice'] = parseInt(formData.twelveHrPrice)
+    formData['sixHrPrice'] = parseInt(formData?.sixHrPrice)
+    formData['dealPrice'] = parseInt(formData?.dealPrice)
+    formData['twelveHrPrice'] = parseInt(formData?.twelveHrPrice)
     formData['engineerPrice'] = 1000;
-    formData['promo'] = room.roomPromos;
-    formData['images'] = images.map((aI) => aI.uri);
-    formData['aminities'] = room.roomTitleDescs;
+    formData['promo'] = room?.roomPromos;
+    formData['images'] = images?.map((aI) => aI.uri);
+    formData['aminities'] = room?.roomTitleDescs;
     dispatch(Actions.createRoom(formData));
   };
-  console.log('here is slot', formData)
+
 
   const keyExtractor = (k) => `${k.id}`;
 
@@ -135,19 +142,23 @@ const AddRoom = ({ route, navigation }) => {
       setErrors(Errors);
       return;
     }
-    
+
     formData['sixHrPrice'] = parseInt(formData.sixHrPrice)
     formData['dealPrice'] = parseInt(formData.dealPrice)
     formData['twelveHrPrice'] = parseInt(formData.twelveHrPrice)
     formData['imagesModified'] = isImagesModified;
-    formData['images'] = images.map((aI) => aI.uri);
+    formData['images'] = images?.map((aI) => aI.uri);
     formData['promo'] = room.editRoomPromos;
     formData['aminities'] = amenities;
-    dispatch(Actions.updateRoom(formData, studio.selectedStudio.imageUrls));
+    console.log('here is slot', formData)
+
+    dispatch(Actions.updateRoom(formData, studio.selectedStudio.imageUrls || []));
   };
+
 
   const renderPromos = () => {
     return (
+
       <SwipeListView
         data={editMode ? room.editRoomPromos : room.roomPromos}
         renderItem={(data, rowMap) => (
@@ -164,13 +175,48 @@ const AddRoom = ({ route, navigation }) => {
         renderHiddenItem={(data, rowMap) => (
           <SwipeCellButton
             key={`${data.index}`}
-            onPress={() => {
-              dispatch(
-                editMode
-                  ? Actions.removeEditPromoCode(data.item)
-                  : Actions.removePromoCode(data.item),
-              )
-              // delete from fire store as well
+            onPress={async () => {
+              const promoIdToDelete = data.item.id;
+              try {
+                await Promise.all(
+                  studio?.studios?.map(async (item) => {
+                    const docRef = firestore().collection('Studio').doc(item.docId);
+
+                    // Get the existing promos array from the document
+                    const doc = await docRef.get();
+                    const existingPromos = doc.data()?.promo || [];
+
+                    // Find the index of the promo code to delete
+                    const promoIndexToDelete = existingPromos.findIndex(promo => promo.id === promoIdToDelete);
+
+                    if (promoIndexToDelete !== -1) {
+                      // Remove the promo code from the array
+                      const updatedPromos = [
+                        ...existingPromos.slice(0, promoIndexToDelete),
+                        ...existingPromos.slice(promoIndexToDelete + 1)
+                      ];
+                      //removes locally
+                      dispatch(
+                        editMode
+                          ? Actions.removeEditPromoCode(data.item)
+                          : Actions.removePromoCode(data.item),
+                      )
+
+                      // Update the document with the updated promos array
+                      await docRef.update({ promo: updatedPromos });
+                      console.log('Promo code deleted successfully for docId:', item.docId);
+                    } else {
+                      console.log('Promo code not found in the document:', item.docId);
+                    }
+                  })
+                );
+                console.log('Promo code deleted successfully for all docIds.');
+              } catch (error) {
+                console.error('Error deleting promo code:', error);
+              }
+
+
+              // delete from fire store as well /
               // removeFromDbAsWell(data)
             }
             }
@@ -255,7 +301,6 @@ const AddRoom = ({ route, navigation }) => {
       />
     );
   };
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#000000' }}>
       <Container style={styles.container}>
@@ -289,6 +334,7 @@ const AddRoom = ({ route, navigation }) => {
               }
             />
           </View>
+
           {renderRoomAmenities()}
           <View style={{ marginTop: 20 }}>
             <MediumText bold textStyle={styles.margin}>
@@ -330,7 +376,6 @@ const AddRoom = ({ route, navigation }) => {
                   setErrors({});
                 }}
               />
-
             </View>
             {/*Set last minute deal price */}
 
@@ -413,20 +458,24 @@ const AddRoom = ({ route, navigation }) => {
               setErrors({});
             }}
           />
-          <View style={styles.addTitle}>
-            <MediumText bold textStyle={styles.margin}>
-              Promos
-            </MediumText>
-            <Icon
-              name="add-circle"
-              color={Colors.red}
-              size={30}
-              onPress={() =>
-                navigation.navigate(editMode ? 'EditPromoCode' : 'AddPromoCode')
-              }
-            />
-          </View>
-          {renderPromos()}
+          {(studio?.selectedStudio?.title == `OMAR’S ROOM` && editMode) &&
+            (<View style={styles.addTitle}>
+              <MediumText bold textStyle={styles.margin}>
+                Promos
+              </MediumText>
+              <Icon
+                name="add-circle"
+                color={Colors.red}
+                size={30}
+                onPress={() =>
+                  navigation.navigate(editMode ? 'EditPromoCode' : 'AddPromoCode')
+                }
+              />
+            </View>)
+          }
+          {/* {(studio?.selectedStudio?.title == `OMAR’S ROOM` && editMode) && renderPromos()} */}
+          {(studio?.selectedStudio?.title == `OMAR’S ROOM` && editMode) && renderPromos()}
+
           <SolidButton
             title={editMode ? 'Update Room' : 'Save Room'}
             textStyle={styles.btnTextStyle}

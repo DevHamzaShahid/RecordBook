@@ -55,7 +55,7 @@ const StudioItem = (props) => {
         />
       </View>
       <LargeText textStyle={styles.textStyle}>
-        {props.title.toUpperCase()}
+        {props?.title?.toUpperCase()}
       </LargeText>
 
       <View style={styles.subTextView}>

@@ -25,6 +25,7 @@ import colors from '../../common/colors';
 import SolidButton from '../../components/Buttons/SolidButton';
 import { isMidnightDealTime } from '../../utils/helper';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useIsFocused } from '@react-navigation/native';
 
 export function generatorBookingSession(session = {}) {
   return {
@@ -131,7 +132,7 @@ const SelectBookingDateTime = ({ navigation }) => {
   const [bookingsInfo, setBookingsInfo] = useState({});
   const [isMidnight, setMidnight] = useState(false)
   const [updatedPrice, setUpdatedPrice] = useState(0)
-
+  const isFocused = useIsFocused()
   useEffect(() => {
     const midnight = isMidnightDealTime()
     setMidnight(midnight)
@@ -154,6 +155,7 @@ const SelectBookingDateTime = ({ navigation }) => {
   //   }
   // }, [isMidnight])
   useEffect(() => {
+    console.log("ismidnight???", isMidnight);
     if (isMidnight == true) {
       // if (studio.selectedStudio.twelveHrPrice == 200) {
       //   setUpdatedPrice(150)
@@ -224,11 +226,22 @@ const SelectBookingDateTime = ({ navigation }) => {
     (date) => {
       const keys = Object.keys(bookingsInfo);
       const cur = bookingsInfo[date.dateString] ?? {};
+      const currentDate = new Date();
+      const formattedCurrentDate = currentDate.toISOString().slice(0, 10);
+      const midnight = isMidnightDealTime()
+
+      //booking ,can only avail at the moment////
+      if ((date.dateString > formattedCurrentDate) && midnight) {
+        alert('This offer is available only for the present time and cannot be accessed in the future.')
+        return;
+      }
+
 
       if (keys.length > 2 && !cur.selected) {
         Alert.alert('', 'You can only choose up to 3 sessions');
         return;
       }
+      ///////
 
       setCurSelectSection(
         generatorBookingSession({
@@ -254,44 +267,44 @@ const SelectBookingDateTime = ({ navigation }) => {
       <Container style={styles.container}>
         <SafeAreaView />
         <ScrollView>
-        <View style={styles.wrapper}>
-          <View style={styles.view}>
-            <Pressable
-              hitSlop={10}
-              onPress={navigation.goBack}
-              style={styles.closeButton}>
-              <Icon name={'close'} type={'antdesign'} color={'#fff'} />
-            </Pressable>
-            <LargeText textStyle={styles.bookButtonStyle}>
-              Select a date
-            </LargeText>
-            <MediumText>Choose up to 3 sessions.</MediumText>
-          </View>
+          <View style={styles.wrapper}>
+            <View style={styles.view}>
+              <Pressable
+                hitSlop={10}
+                onPress={navigation.goBack}
+                style={styles.closeButton}>
+                <Icon name={'close'} type={'antdesign'} color={'#fff'} />
+              </Pressable>
+              <LargeText textStyle={styles.bookButtonStyle}>
+                Select a date
+              </LargeText>
+              <MediumText>Choose up to 3 sessions.</MediumText>
+            </View>
 
-          <CustomCalendar
-            dateSelected={selectDate}
-            markedDates={bookingsInfo}
-          />
-        </View>
-        <View style={styles.yourCardView}>
-          <RegularText bold>Your Cart</RegularText>
-        </View>
-        <FlatList
-          data={listSessionBooking}
-          keyExtractor={(item) => item.date}
-          renderItem={({ item }) => (
-            <RenderBookingDate
-              item={item}
-              onRemove={() => {
-                const newBookingsInfo = { ...bookingsInfo };
-                delete newBookingsInfo[item.date];
-                setBookingsInfo(newBookingsInfo);
-              }}
+            <CustomCalendar
+              dateSelected={selectDate}
+              markedDates={bookingsInfo}
             />
-          )}
-          ListEmptyComponent={ListEmptyComponent}
-        />
-       </ScrollView>
+          </View>
+          <View style={styles.yourCardView}>
+            <RegularText bold>Your Cart</RegularText>
+          </View>
+          <FlatList
+            data={listSessionBooking}
+            keyExtractor={(item) => item.date}
+            renderItem={({ item }) => (
+              <RenderBookingDate
+                item={item}
+                onRemove={() => {
+                  const newBookingsInfo = { ...bookingsInfo };
+                  delete newBookingsInfo[item.date];
+                  setBookingsInfo(newBookingsInfo);
+                }}
+              />
+            )}
+            ListEmptyComponent={ListEmptyComponent}
+          />
+        </ScrollView>
         {listSessionBooking.length > 0 && (
           <SafeAreaView>
             <View style={styles.btnContainer}>

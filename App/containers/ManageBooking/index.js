@@ -1,21 +1,21 @@
-import React, {useEffect, useState, useCallback} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {View, Text} from 'react-native';
-import {Container} from 'native-base';
-import Actions, {booking} from '../MyBooking/reducer';
-import {GlobalStyle, Colors} from '@common';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { View, Text } from 'react-native';
+import { Container } from 'native-base';
+import Actions, { booking } from '../MyBooking/reducer';
+import { GlobalStyle, Colors } from '@common';
 import ProfileActions from '../Profile/reducer';
 import EmptyComponent from '../../components/EmptyComponent';
 import AdminBookingItem from '../../components/AdminBookingItem';
 import SwipeCellButton from '../../components/SwipeCellButton';
-import {SwipeListView} from 'react-native-swipe-list-view';
+import { SwipeListView } from 'react-native-swipe-list-view';
 import styles from './styles';
-import {Calendar} from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
 import SectionHeader from '../../components/SectionHeader';
 import FilterStudioModal from '../../components/FilterStudioModal';
 
-const ManageBooking = ({navigation}) => {
+const ManageBooking = ({ navigation }) => {
   const dispatch = useDispatch();
   const bookings = useSelector(state => state.booking.bookings);
   const bookingDeleted = useSelector(state => state.booking.bookingDeleted);
@@ -134,7 +134,7 @@ const ManageBooking = ({navigation}) => {
     dispatch(Actions.deleteBooking(item, false, true));
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     const associatedStudio = studio.studios.find(
       aStudio => aStudio.docId === item.studioId,
     );

@@ -1,10 +1,10 @@
-import React, {useCallback, useEffect} from 'react';
-import {Alert, Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {isMountedRef, navigationRef} from '../utils/rNavigation';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {connect, useSelector} from 'react-redux';
+import React, { useCallback, useEffect } from 'react';
+import { Alert, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { isMountedRef, navigationRef } from '../utils/rNavigation';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { connect, useSelector } from 'react-redux';
 import { CardStyleInterpolators } from '@react-navigation/stack';
 // Auth Flow
 import Splash from '../containers/Splash';
@@ -67,7 +67,7 @@ import ManageUser from '../containers/ManageUser';
 import UserDetails from '../containers/UserDetails';
 import SendNotification from '../containers/SendNotification';
 
-import {Colors, Images} from '@common';
+import { Colors, Images } from '@common';
 import SignUp from '../containers/SignUp';
 import Promotions from '../containers/Promotions';
 import AgreementSignature from '../containers/AgreementSignature';
@@ -86,7 +86,7 @@ const header = (title) => {
     title: title,
     headerStyle: {
       backgroundColor: Colors.black,
-      shadowOffset: {height: 0, width: 0},
+      shadowOffset: { height: 0, width: 0 },
     },
     headerTintColor: Colors.white,
   };
@@ -97,7 +97,7 @@ const headerRed = (title) => {
     title: title,
     headerStyle: {
       backgroundColor: Colors.red,
-      shadowOffset: {height: 0, width: 0},
+      shadowOffset: { height: 0, width: 0 },
     },
     headerTintColor: Colors.white,
   };
@@ -111,7 +111,6 @@ const createMainStack = () => (
       gestureEnabled: false,
     }}>
     <Stack.Screen name="Berbix" component={Berbix} />
-
     <Stack.Screen name="Splash" component={Splash} />
     <Stack.Screen name="PhoneLogin" component={PhoneLogin} />
     <Stack.Screen name="TOS" component={TOS} />
@@ -140,10 +139,8 @@ const Main = () => {
         // cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
       }}>
       <Stack.Screen name="HomeTab" children={createMainTab} />
-
       <Stack.Screen name="StudioDetail" component={StudioDetail} />
       <Stack.Screen name="ConfirmBooking" component={confirmBookingStack} />
-
       <Stack.Screen name="ApplyCoupon" component={ApplyCoupon} />
       <Stack.Screen name="RentalAgreement" component={RentalAgreement} />
       <Stack.Screen name="PaymentSuccessful" component={PaymentSuccessful} />
@@ -153,7 +150,7 @@ const Main = () => {
 
 const confirmBookingStack = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="ChooseDateTime" component={SelectBookingDateTime} />
       <Stack.Screen name="AgreementSignature" component={AgreementSignature} />
       <Stack.Screen name="ConfirmPay" component={ConfirmPay} />
@@ -174,7 +171,7 @@ const myBookingsStack = () => (
       name="BookingDetail"
       component={BookingDetail}
       options={header('')}
-      initialParams={{adminMode: false}}
+      initialParams={{ adminMode: false }}
     />
     <Stack.Screen name="Receipt" component={Receipt} options={header('')} />
     <Stack.Screen
@@ -186,7 +183,7 @@ const myBookingsStack = () => (
 );
 
 const profileStack = () => (
-  <Stack.Navigator screenOptions={{headerShown: false}}>
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Profile" component={Profile} />
     <Stack.Screen name="EditProfile" component={EditProfile} />
     <Stack.Screen name="Promotions" component={Promotions} />
@@ -195,7 +192,7 @@ const profileStack = () => (
   </Stack.Navigator>
 );
 
-function Badge({newMessage, icon, focused}) {
+function Badge({ newMessage, icon, focused }) {
   return (
     <View>
       <Image source={icon} style={styles.icon} />
@@ -211,7 +208,7 @@ const BadgeContainer = connect((state, ownProps) => ({
 }))(Badge);
 
 const createMainTab = () => {
-  const {auth} = useSelector((state) => state.user);
+  const { auth } = useSelector((state) => state.user);
 
   const onPress = useCallback(
     (navigation, props) => {
@@ -219,7 +216,7 @@ const createMainTab = () => {
         props.onPress();
       } else {
         Alert.alert('', 'You need to be logged in to have access to this tab', [
-          {style: 'cancel', text: 'Cancel'},
+          { style: 'cancel', text: 'Cancel' },
           {
             text: 'Sign In or Create Account',
             onPress: () => navigation.navigate('PhoneLogin'),
@@ -231,14 +228,14 @@ const createMainTab = () => {
   );
   return (
     <Tab.Navigator
-      screenOptions={({route, navigation}) => ({
+      screenOptions={({ route, navigation }) => ({
         tabBarButton: (props) => (
           <TouchableOpacity
             {...props}
             onPress={() => onPress(navigation, props)}
           />
         ),
-        tabBarIcon: ({focused}) => {
+        tabBarIcon: ({ focused }) => {
           let icon;
           switch (route.name) {
             case 'Studio': {
@@ -285,42 +282,42 @@ const createMainTab = () => {
   );
 };
 
-//////////////////////////////////////////////////////ADMIN////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////// *ADMIN* ////////////////////////////////////////////////////////////////
 
 const MyRoomStack = () => (
-  <Stack.Navigator screenOptions={{headerShown: false}}>
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen
       name="MyRoom"
       component={MyRoom}
-      options={{headerLeft: null, ...header('')}}
+      options={{ headerLeft: null, ...header('') }}
     />
     <Stack.Screen
       name="RoomDetail"
       component={RoomDetail}
       options={header('')}
     />
-     <Stack.Screen
+    <Stack.Screen
       name="Testing"
       component={Testing}
-      // options={{headerLeft: null, ...header('')}}
+    // options={{headerLeft: null, ...header('')}}
     />
     <Stack.Screen
       name="EditRoom"
       component={AddRoom}
       options={header('')}
-      initialParams={{editMode: true}}
+      initialParams={{ editMode: true }}
     />
     <Stack.Screen
       name="EditRoomTitleDesc"
       component={AddRoomTitleDesc}
       options={header('')}
-      initialParams={{editMode: true}}
+      initialParams={{ editMode: true }}
     />
     <Stack.Screen
       name="EditPromoCode"
       component={AddPromoCode}
       options={header('')}
-      initialParams={{editMode: true}}
+      initialParams={{ editMode: true }}
     />
     <Stack.Screen name="Profile" component={Profile} />
     <Stack.Screen
@@ -347,19 +344,19 @@ const MyRoomStack = () => (
       name="AddRoom"
       component={AddRoom}
       options={header('')}
-      initialParams={{editMode: false}}
+      initialParams={{ editMode: false }}
     />
     <Stack.Screen
       name="AddRoomTitleDesc"
       component={AddRoomTitleDesc}
       options={header('')}
-      initialParams={{editMode: false}}
+      initialParams={{ editMode: false }}
     />
     <Stack.Screen
       name="AddPromoCode"
       component={AddPromoCode}
       options={header('')}
-      initialParams={{editMode: false}}
+      initialParams={{ editMode: false }}
     />
   </Stack.Navigator>
 );
@@ -369,7 +366,7 @@ const userRoomStack = () => (
     <Stack.Screen
       name="Manage User"
       component={ManageUser}
-      options={{headerLeft: null, ...header('')}}
+      options={{ headerLeft: null, ...header('') }}
     />
     <Stack.Screen
       name="UserDetails"
@@ -392,7 +389,7 @@ const helpDeskStack = () => (
     <Stack.Screen
       name="HelpDesk"
       component={HelpDesk}
-      options={{headerLeft: null, ...header('')}}
+      options={{ headerLeft: null, ...header('') }}
     />
     <Stack.Screen name="Chat" component={Chat} options={header('')} />
     <Stack.Screen name="FAQ" component={FAQs} options={header('')} />
@@ -419,13 +416,13 @@ const manageBookingsStack = () => (
     <Stack.Screen
       name="Manage Booking"
       component={ManageBooking}
-      options={{headerLeft: null, ...header('')}}
+      options={{ headerLeft: null, ...header('') }}
     />
     <Stack.Screen
       name="ManageBookingDetail"
       component={BookingDetail}
       options={header('')}
-      initialParams={{adminMode: true}}
+      initialParams={{ adminMode: true }}
     />
     <Stack.Screen
       name="Reschedule"
@@ -438,8 +435,8 @@ const manageBookingsStack = () => (
 const createAdminMainTab = () => {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
           let icon;
           switch (route.name) {
             case 'My Rooms':
@@ -483,9 +480,9 @@ export default () => {
   return (
     <NavigationContainer
       ref={navigationRef}
-      // onReady={() => {
-      //   isMountedRef.current = true;
-      // }}
+    // onReady={() => {
+    //   isMountedRef.current = true;
+    // }}
     >
       {createMainStack()}
     </NavigationContainer>

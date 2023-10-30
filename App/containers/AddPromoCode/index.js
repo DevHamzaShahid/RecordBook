@@ -10,13 +10,15 @@ import CheckBoxTitle from '../../components/CheckBoxTitle';
 import TextField from '../../components/TextField';
 import Actions from '../AddRoom/reducer';
 import styles from './styles';
-import DatePicker from 'react-native-date-picker';
+// import DatePicker from 'react-native-date-picker';
 import { Icon } from 'react-native-elements';
-
+import firestore from '@react-native-firebase/firestore';
+import DatePicker from 'react-native-datepicker'
 const AddPromoCode = ({ route, navigation }) => {
   const { editMode } = route.params;
   const user = useSelector(state => state.user);
   const room = useSelector(state => state.room);
+  const studio = useSelector((state) => state.studio);
   const promo = editMode ? room.editPromo : room.promo;
 
   const [title, onChangeTitle] = useState(promo ? promo.code : '');
@@ -40,6 +42,38 @@ const AddPromoCode = ({ route, navigation }) => {
 
   useEffect(() => { });
 
+  // useEffect(() => {
+  //   // const docRef = firestore().collection('Studio').doc('gWSDMpcLIZy97XTUjUb8');
+  //   // (async() => {
+  //   //   const snapshot = await docRef.get();
+  //   //   const matchingPromoCode = snapshot.data().promo
+
+  //   //   console.log("get databes studios",matchingPromoCode);
+  //   // })()
+  //   try {
+  //     await Promise.all(
+  //       studio?.studios?.map(async (item) => {
+  //         const batch = firestore().batch(); // Create a batch write
+
+  //         // Loop through each docId and set data in Firestore
+  //         const docRef = firestore().collection('Studio').doc(item.docId);
+  //         const promoData = {
+  //           // Your promo data here, for example:
+  //           promo: 'YOUR_PROMO_CODE',
+  //         };
+
+  //         batch.set(docRef, promoData); // Add set operation to the batch
+
+  //         // Commit the batch write
+  //         await batch.commit();
+  //       })
+  //     );
+  //     console.log('Data set successfully for all docIds.');
+  //   } catch (error) {
+  //     console.error('Error setting data:', error);
+  //   }
+
+  // }, [studio])
   const clearErrors = () => {
     setPriceError('');
     setPercentageError('');
@@ -55,7 +89,7 @@ const AddPromoCode = ({ route, navigation }) => {
       onChangePercentage('');
     }
   };
-  const add = () => {
+  const add = async () => {
     if (title === '') {
       setTitleError('Please enter promo code');
     }
@@ -81,6 +115,7 @@ const AddPromoCode = ({ route, navigation }) => {
       }
     }
 
+
     let newPromo = {
       id: `${Date.now()}`,
       code: title,
@@ -95,9 +130,37 @@ const AddPromoCode = ({ route, navigation }) => {
         ? Actions.addEditPromoCode(newPromo)
         : Actions.addPromoCode(newPromo),
     );
+    // navigation.goBack();
+
+
     navigation.goBack();
+
+    try {
+      await Promise.all(
+        studio?.studios?.map(async (item) => {
+          const docRef = firestore().collection('Studio').doc(item.docId);
+
+          // Get the existing promos array from the document
+          const doc = await docRef.get();
+          const existingPromos = doc.data()?.promo || [];
+
+          // Add the new promo to the existing promos array
+          const updatedPromos = [...existingPromos, newPromo];
+
+          // Update the document with the updated promos array
+          await docRef.update({ promo: updatedPromos });
+        })
+      );
+      console.log('Data set successfully for all docIds.');
+    } catch (error) {
+      console.error('Error setting data:', error);
+    }
+
+    
+
   };
-  console.log("isenabled", isEnabled);
+
+  console.log("datetime>>", date);
   return (
     <SafeAreaView style={{
       flex: 1,
@@ -178,10 +241,32 @@ const AddPromoCode = ({ route, navigation }) => {
             <LargeText bold textStyle={styles.margin}>
               Valid until
             </LargeText>
-            <TouchableOpacity onPress={() => setOpen(true)} style={styles.validContainer}>
-              <Text style={styles.validText}>{date.toLocaleDateString()}</Text>
-              <Icon name='keyboard-arrow-down' color={'#fff'} />
-            </TouchableOpacity>
+            {/* <TouchableOpacity onPress={() => setOpen(true)} style={styles.validContainer}> */}
+              {/* <Text style={styles.validText}>{date.toLocaleDateString()}</Text> */}
+              {/* <Icon name='keyboard-arrow-down' color={'#fff'} /> */}
+              <DatePicker
+                style={{ width: 200,backgroundColor:'#fff',marginHorizontal:10}}
+                date={date}
+                mode="date"
+                placeholder="select date"
+                // format="YYYY-MM-DD"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: 'absolute',
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36
+                  }
+                  // ... You can check the source to find the other keys.
+                }}
+                onDateChange={(date) => { setDate(date) }}
+              />
+            {/* </TouchableOpacity> */}
           </View>
           <View style={styles.price}>
             <LargeText bold textStyle={styles.margin}>
@@ -195,7 +280,7 @@ const AddPromoCode = ({ route, navigation }) => {
               value={isEnabled}
             />
           </View>
-          <DatePicker
+          {/* <DatePicker
             modal
             mode='date'
             open={open}
@@ -207,7 +292,8 @@ const AddPromoCode = ({ route, navigation }) => {
             onCancel={() => {
               setOpen(false)
             }}
-          />
+          /> */}
+
 
           <SolidButton
             title="Add"

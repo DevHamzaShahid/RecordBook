@@ -27,7 +27,7 @@ target 'RecordBook' do
 target 'RecordBookTests' do
   inherit! :complete
   # Pods for testing1
-end
+end ;
 
 end
 

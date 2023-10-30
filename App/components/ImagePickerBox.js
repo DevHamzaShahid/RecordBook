@@ -26,24 +26,15 @@ const ImagePickerBox = (props) => {
   const [refresh, setRefresh] = useState(0);
   const [selectedImageForEditing, setEditing] = useState("")
 
-  const [test, setTest] = useState(images.map((image, index) => {
+  // const [test, setTest] = useState(images?.map((image, index) => {
+  //   return { uri: image, id: `${index}` };
+  // }))
+  const [test, setTest] = useState(images?.map((image, index) => {
     return { uri: image, id: `${index}` };
-  }))
+  }) || []);
   const { navigate } = useNavigation()
   const isfocused = useIsFocused()
-  // useEffect(() => {
-  //   if (props.images) {
-  //     setImageList(
-  //       props?.images.map((image, index) => {
-  //         return { uri: image, id: `${index}` };
-  //       }),
-  //     );
-  //   }
-  // }, [isfocused]);
 
-  // useEffect(() => {
-  //   console.log("Updatedlist", imageList);
-  // }, [imageList])
   const options = {
     quality: 1.0,
     maxWidth: 500,
@@ -53,29 +44,12 @@ const ImagePickerBox = (props) => {
     },
   };
 
-  // const removeImage = (index) => {
 
-  //   const copyList = test.slice()
-  //   const newImages = copyList.filter((item, ind) => ind !== index);
-  //   console.log("copyList", newImages);
-  //   // console.log("newImages");
-  //   // selectedImages(newImages);
-  //   // setImageList(newImages);
-  //   // setIsValue(!isValue);
-  //   // setIsImagesModified(true);
-  // };
-  // const removeImage = (index) => {
-  //   setTest(prevState => {
-  //     const copyList = [...prevState]
-  //     copyList.splice(index, 1);
-  //     return copyList;
-  //   });
-  // };
   const removeImage = (index) => {
     setTest((prevState) => {
       const copyList = [...prevState];
-      copyList.splice(index, 1);
-      const updatedList = copyList.map((item, i) => ({
+      copyList?.splice(index, 1);
+      const updatedList = copyList?.map((item, i) => ({
         ...item,
         id: `${i}`,
       }));
@@ -88,24 +62,7 @@ const ImagePickerBox = (props) => {
     setIsValue(!isValue);
     setIsImagesModified(true);
   }, [test]);
-  // async function requestPermissions() {
-  //   try {
-  //     const granted = await PermissionsAndroid.requestMultiple([
-  //       PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-  //       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-  //       PermissionsAndroid.PERMISSIONS.CAMERA,
-  //     ]);
-  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  //       console.log('Permissions granted');
-  //     } else {
-  //       console.log('Permissions denied');
-  //     }
-  //     return granted
-  //   } catch (err) {
-  //     console.warn(err);
-  //     return granted
-  //   }
-  // }
+
   const changeImage = async () => {
     // const granted = await requestPermissions();
     // console.log(granted)
@@ -134,13 +91,14 @@ const ImagePickerBox = (props) => {
       cropperToolbarWidgetFontSize: 24, // Set the font size for the cropper toolbar widgets
       cropRect: { x: 0, y: 0, width: 800, height: 500 },
     }).then(response => {
-      const source = { uri: response.path, id: `${test.length}` };
+      const source = { uri: response?.path, id: `${test?.length}` };
       selectedImages([...test, source]);
       setEditing(response.path)
       setImageList([...test, source]);
       setTest((prevState) => [...prevState, source]);
       setIsValue(!isValue);
       setIsImagesModified(true);
+      console.log("image selecvted????>>>>",response);
     }).catch(error => {
       alert(error.message);
     });
@@ -152,7 +110,7 @@ const ImagePickerBox = (props) => {
     ({ item, index, drag, isActive }) => {
       return (
         <TouchableOpacity style={styles.buttonStyle} onLongPress={drag}>
-          <ImageBackground source={{ uri: item.uri }} style={styles.imageStyle}>
+          <ImageBackground source={{ uri: item?.uri }} style={styles.imageStyle}>
             <Icon
               name="cancel"
               color={Colors.tabBarColor}
@@ -167,7 +125,7 @@ const ImagePickerBox = (props) => {
   );
  
   const onDragEnd = ({ data }) => {
-    const updatedData = data.map((item, index) => ({
+    const updatedData = data?.map((item, index) => ({
       ...item,
       order: index,
     }));
@@ -180,7 +138,7 @@ const ImagePickerBox = (props) => {
   return (
     <View>
       <DraggableFlatList
-        data={test}
+        data={test?test:[]}
         horizontal
         renderItem={renderItem}
         keyExtractor={(item, index) => `draggable-item-${item.id}`}
@@ -188,7 +146,7 @@ const ImagePickerBox = (props) => {
         ListFooterComponent={() => {
           return (
             <View style={styles.chooseFileView}>
-              {test.length === 0 && (
+              {test?.length === 0 && (
                 <Icon name="photo-library" size={30} color="white" />
               )}
               <SolidButton

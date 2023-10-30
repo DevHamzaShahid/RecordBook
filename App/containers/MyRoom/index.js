@@ -15,11 +15,16 @@ import EmptyComponent from '../../components/EmptyComponent';
 
 import styles from './styles';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { MAILCHIMP_APIKEY } from '../../utils/helper';
+import axios from 'axios';
 const MyRoom = ({ navigation }) => {
   const dispatch = useDispatch();
   const studio = useSelector((state) => state.studio);
   const [orderActive, setOrderActive] = useState(false);
   const [sortedStudio, setSortedStudio] = useState([]);
+
+
+
 
   useEffect(() => {
     dispatch(Actions.getStudios());
@@ -35,16 +40,20 @@ const MyRoom = ({ navigation }) => {
   const onPressDelete = (item) => {
     dispatch(AddRoomActions.deleteRoom(item));
   };
+
   const onPressBook = (item) => {
     dispatch(Actions.setSelectedStudio(item));
     navigation.navigate('ManualDateTime');
   };
+
   const onPressEdit = (item) => {
     dispatch(Actions.setSelectedStudio(item));
     dispatch(AddRoomActions.setEditRoomTitleDesc(item.aminities));
     dispatch(AddRoomActions.setEditPromoCode(item.promo));
     navigation.navigate('EditRoom');
   };
+
+
   // useEffect(() => {
   //   const desiredTitles = ['OMAR’S ROOM', 'Twin Room A', 'Twin Room B', 'GAME ROOM', 'Unit 5', 'Internal ROOM'];
   //   console.log("unsorted", studio?.studios);
@@ -53,6 +62,7 @@ const MyRoom = ({ navigation }) => {
   //   );
   //   setSortedStudio(sortedItems);
   // }, [studio]);
+
   useEffect(() => {
     const desiredTitles = ['OMAR’S ROOM', 'Twin Room A', 'Twin Room B', 'GAME ROOM', 'Unit 5', 'Internal ROOM'];
 
@@ -68,7 +78,7 @@ const MyRoom = ({ navigation }) => {
   }, [studio]);
 
   const renderStudiosItem = useCallback(
-    ({ item, index, drag, isActive }: RenderItemParams<Item>) => {
+    ({ item, index, drag, isActive }) => {
       return (
         <RoomItem
           title={item.title}
@@ -84,6 +94,7 @@ const MyRoom = ({ navigation }) => {
     },
     [],
   );
+
 
   const showProfile = () => {
     navigation.navigate('Profile');
