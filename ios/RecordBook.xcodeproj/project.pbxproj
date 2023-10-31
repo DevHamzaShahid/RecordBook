@@ -946,13 +946,13 @@
 				CODE_SIGN_ENTITLEMENTS = RecordBook/RecordBookDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = WDK8HDMC7J;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RecordBook/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.6.4;
+				MARKETING_VERSION = 1.6.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -976,12 +976,12 @@
 				CODE_SIGN_ENTITLEMENTS = RecordBook/RecordBook.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = WDK8HDMC7J;
 				INFOPLIST_FILE = RecordBook/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.6.4;
+				MARKETING_VERSION = 1.6.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

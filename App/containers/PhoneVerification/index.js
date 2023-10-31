@@ -20,7 +20,7 @@ const PhoneVerification = ({ navigation, route }) => {
   const [errors, setErrors] = useState('');
   const [code, setCode] = useState('');
 
-  const continuePressed = useCallback(async() => {
+  const continuePressed = useCallback(async () => {
     if (code === '') {
       setErrors('Please enter correct verification code');
       return;
@@ -64,24 +64,24 @@ const PhoneVerification = ({ navigation, route }) => {
 
     if (userRegisteredSuccesfully) {
       const listId = '6c9c0c76f1'; //audiance id is basically the listID
-    (async () => {
-      const apikey = MAILCHIMP_APIKEY
-      try {
-        const response = await axios.post(
-          `https://us9.api.mailchimp.com/3.0/lists/${listId}/members`,
-          dataR,
-          {
-            headers: {
-              Authorization: `Bearer ${apikey}`
+      (async () => {
+        const apikey = MAILCHIMP_APIKEY
+        try {
+          const response = await axios.post(
+            `https://us9.api.mailchimp.com/3.0/lists/${listId}/members`,
+            dataR,
+            {
+              headers: {
+                Authorization: `Bearer ${apikey}`
+              }
             }
-          }
-        );
-        console.log('User added to Mailchimp successfully:', response.data);
-      } catch (error) {
-        alert(error.response.data)
-        console.error('Error adding user to Mailchimp:', error.response.data);
-      }
-    })()
+          );
+          console.log('User added to Mailchimp successfully:', response.data);
+        } catch (error) {
+          // alert('A user with the same email is already been registered on mailchimp')
+          console.error('Error adding user to Mailchimp:', error.response.data);
+        }
+      })()
     }
   }, [userRegisteredSuccesfully, route.params, navigation]);
   return (
